@@ -5,6 +5,12 @@
     <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-lg">
         <div class="text-center">
             <img class="mx-auto h-16 w-auto" src="{{ asset('images/logo.png') }}" alt="COOP8692 Logo">
+            @if(session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 max-w-4xl mx-auto" role="alert">
+                <strong class="font-bold">Success!</strong>
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+            @endif
             <h2 class="mt-6 text-3xl font-bold text-green-700">Sign in to your account</h2>
         </div>
         <form class="mt-8 space-y-6" method="POST" action="{{ route('login') }}">

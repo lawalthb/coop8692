@@ -8,7 +8,7 @@
             <p class="text-xl mb-12 leading-relaxed">86/92 cooperative society charter.
             </p>
             <div class="space-x-6">
-                <a href="{{ route('register') }}" class="bg-white text-green-700 px-8 py-4 rounded-lg hover:bg-gray-100 font-semibold transition duration-300">Login</a>
+                <a href="{{ route('login') }}" class="bg-white text-green-700 px-8 py-4 rounded-lg hover:bg-gray-100 font-semibold transition duration-300">Login</a>
                 <a href="/about" class="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white hover:text-green-700 font-semibold transition duration-300">Know More</a>
             </div>
         </div>

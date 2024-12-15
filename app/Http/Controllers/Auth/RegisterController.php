@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeMember;
+use App\Models\State;
 
 class RegisterController extends Controller
 {
@@ -21,6 +22,8 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'phone_number' => 'required|string|max:20',
             'password' => 'required|string|min:8|confirmed',
+            'state_id' => 'required|exists:states,id',
+            'lga_id' => 'required|exists:lgas,id'
         ]);
 
         $user = User::create([
@@ -31,6 +34,8 @@ class RegisterController extends Controller
             'email' => $validated['email'],
             'phone_number' => $validated['phone_number'],
             'password' => Hash::make($validated['password']),
+            'state_id' => $validated['state_id'],
+            'lga_id' => $validated['lga_id'],
             'member_no' => 'COOP' . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT),
         ]);
 
@@ -42,6 +47,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        $states = State::where('status', 'active')->get();
+        return view('auth.register', compact('states'));
     }
 }
