@@ -15,7 +15,7 @@ class SavingTypeRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'code' => 'required|string|unique:saving_types,code,' . $this->saving_type?->id,
+           
             'description' => 'nullable|string',
             'interest_rate' => 'required|numeric|min:0|max:100',
             'minimum_balance' => 'required|numeric|min:0',

@@ -9,6 +9,7 @@
                 @if(!$member->is_approved)
                     <form action="{{ route('admin.members.approve', $member) }}" method="POST">
                         @csrf
+                        @method('PATCH')
                         <button type="submit" class="bg-white text-green-600 px-4 py-2 rounded-lg hover:bg-green-50">
                             Approve Member
                         </button>

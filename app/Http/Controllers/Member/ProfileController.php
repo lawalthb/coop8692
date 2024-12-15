@@ -3,35 +3,40 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Support\Facades\Storage;
+use App\Models\State;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
-    public function index()
+    public function show()
     {
-        $user = auth()->user();
-        return view('member.profile.index', compact('user'));
+        $data = [
+            'user' => auth()->user(),
+            'states' => State::where('status', 'active')->get()
+        ];
+
+        return view('member.profile.show', compact('data'));
     }
 
-    public function update(ProfileUpdateRequest $request)
+    public function update(Request $request)
     {
         $user = auth()->user();
-        $data = $request->validated();
 
-        if ($request->hasFile('signature_image')) {
-            $path = $request->file('signature_image')->store('signatures', 'public');
-            $data['signature_image'] = $path;
-        }
+        $validated = $request->validate([
+            'phone_number' => ['required', 'string', Rule::unique('users')->ignore($user->id)],
+            'home_address' => 'required|string',
+            'state_id' => 'required|exists:states,id',
+            'lga_id' => 'required|exists:lgas,id',
+            'nok' => 'required|string',
+            'nok_relationship' => 'required|string',
+            'nok_phone' => 'required|string',
+            'nok_address' => 'required|string'
+        ]);
 
-        if ($request->hasFile('member_image')) {
-            $path = $request->file('member_image')->store('members', 'public');
-            $data['member_image'] = $path;
-        }
+        $user->update($validated);
 
-        $user->update($data);
-
-        return redirect()->route('member.profile.index')
-            ->with('success', 'Profile updated successfully');
+        return back()->with('success', 'Profile updated successfully');
     }
 }

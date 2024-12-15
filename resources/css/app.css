@@ -1,4 +1,11 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    input:not([type="checkbox"]),
+    select,
+    textarea {
+        @apply w-full border border-green-200 text-base rounded-md px-3 py-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50;
+    }
+}

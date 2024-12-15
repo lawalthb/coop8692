@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SavingType;
 use App\Http\Requests\SavingTypeRequest;
+use Illuminate\Support\Str;
 
 class SavingTypeController extends Controller
 {
@@ -21,7 +22,10 @@ class SavingTypeController extends Controller
 
     public function store(SavingTypeRequest $request)
     {
-        SavingType::create($request->validated());
+        $savingType = SavingType::create([
+            ...$request->validated(),
+            'code' => Str::slug($request->name)
+        ]);
         return redirect()->route('admin.saving-types.index')
             ->with('success', 'Saving type created successfully');
     }

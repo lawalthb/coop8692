@@ -8,9 +8,12 @@ use App\Models\SavingType;
 use App\Models\Transaction;
 use App\Http\Requests\SavingEntryRequest;
 use App\Http\Requests\BulkSavingRequest;
+use App\Models\Month;
 use Illuminate\Support\Facades\DB;
 use App\Services\TransactionService;
 use App\Notifications\SavingEntryNotification;
+use App\Models\Saving;
+use App\Models\Year;
 
 class SavingController extends Controller
 {
@@ -20,49 +23,92 @@ class SavingController extends Controller
     {
         $this->transactionService = $transactionService;
     }
-
     public function create()
     {
         $members = User::where('is_approved', true)->where('is_admin', false)->get();
         $savingTypes = SavingType::where('status', 'active')->get();
-        return view('admin.savings.create', compact('members', 'savingTypes'));
+        $months = Month::all();
+        $years = Year::all();
+
+        return view('admin.savings.create', compact('members', 'savingTypes', 'months', 'years'));
     }
+
 
     public function store(SavingEntryRequest $request)
     {
         DB::transaction(function () use ($request) {
-            $transaction = $this->transactionService->createSavingTransaction(
-                $request->user_id,
-                $request->saving_type_id,
-                $request->amount,
-                $request->transaction_date
-            );
+            // First save to savings table
+            $saving = Saving::create([
+                'user_id' => $request->user_id,
+                'saving_type_id' => $request->saving_type_id,
+                'month_id' => $request->month_id,
+                'year_id' => $request->year_id,
+                'amount' => $request->amount,
+                'reference' => generateReference('SAV'),
+                'posted_by' => auth()->id()
+            ]);
+
+            // Then create transaction record
+            $transaction = Transaction::create([
+                'user_id' => $request->user_id,
+                'transactionable_id' => $saving->id,
+                'transactionable_type' => Saving::class,
+                'type' => 'savings',
+                'credit_amount' => $request->amount,
+                'balance' => calculateNewBalance($request->user_id, $request->amount),
+
+                'reference' => $saving->reference,
+                'description' => 'Saving deposit for ' . $saving->savingType->name,
+                'posted_by' => auth()->id(),
+                'transaction_date' => $request->transaction_date
+            ]);
 
             $user = User::find($request->user_id);
             $user->notify(new SavingEntryNotification($transaction));
         });
 
         return redirect()->route('admin.savings.index')
-            ->with('success', 'Saving entry recorded successfully');
+        ->with('success', 'Saving entry recorded successfully');
     }
-
     public function bulkCreate()
     {
         $members = User::where('is_approved', true)->where('is_admin', false)->get();
         $savingTypes = SavingType::where('status', 'active')->get();
-        return view('admin.savings.bulk-create', compact('members', 'savingTypes'));
+        $months = Month::all();
+        $years = Year::all();
+
+        return view('admin.savings.bulk-create', compact('members', 'savingTypes', 'months', 'years'));
     }
+
 
     public function bulkStore(BulkSavingRequest $request)
     {
         DB::transaction(function () use ($request) {
             foreach ($request->entries as $entry) {
-                $transaction = $this->transactionService->createSavingTransaction(
-                    $entry['user_id'],
-                    $entry['saving_type_id'],
-                    $entry['amount'],
-                    $request->transaction_date
-                );
+                // Create saving record
+                $saving = Saving::create([
+                    'user_id' => $entry['user_id'],
+                    'saving_type_id' => $entry['saving_type_id'],
+                    'amount' => $entry['amount'],
+                    'reference' => generateReference('SAV'),
+                    'posted_by' => auth()->id(),
+                    'month_id' => $request->month_id,
+                    'year_id' => $request->year_id
+                ]);
+
+                // Create transaction record
+                $transaction = Transaction::create([
+                    'user_id' => $entry['user_id'],
+                    'transactionable_id' => $saving->id,
+                    'transactionable_type' => Saving::class,
+                    'type' => 'savings',
+                    'credit_amount' => $entry['amount'],
+                    'balance' => calculateNewBalance($entry['user_id'], $entry['amount']),
+                    'reference' => $saving->reference,
+                    'description' => 'Bulk saving deposit for ' . $saving->savingType->name,
+                    'posted_by' => auth()->id(),
+                    'transaction_date' => $request->transaction_date
+                ]);
 
                 $user = User::find($entry['user_id']);
                 $user->notify(new SavingEntryNotification($transaction));
@@ -75,11 +121,17 @@ class SavingController extends Controller
 
     public function index()
     {
-        $transactions = Transaction::with(['user', 'savingType'])
-            ->where('type', 'savings')
+        $transactions = Saving::with(['user', 'savingType'])
+
             ->latest()
             ->paginate(15);
 
         return view('admin.savings.index', compact('transactions'));
     }
+    public function show(Saving $saving)
+    {
+        return view('admin.savings.show', compact('saving'));
+    }
 }
+
+

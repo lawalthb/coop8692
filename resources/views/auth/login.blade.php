@@ -11,6 +11,13 @@
                 <span class="block sm:inline">{{ session('success') }}</span>
             </div>
             @endif
+            @if($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                @foreach($errors->all() as $error)
+                <p class="text-sm">{{ $error }}</p>
+                @endforeach
+            </div>
+            @endif
             <h2 class="mt-6 text-3xl font-bold text-green-700">Sign in to your account</h2>
         </div>
         <form class="mt-8 space-y-6" method="POST" action="{{ route('login') }}">

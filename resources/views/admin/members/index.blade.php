@@ -4,21 +4,32 @@
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold text-gray-800">Member Management</h1>
+        <a href="{{ route('admin.members.create') }}"
+            class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+            Add New Member
+        </a>
     </div>
-
     <div class="bg-white rounded-lg shadow overflow-hidden">
-        <div class="p-4 border-b">
+        <div class="p-4 border-b bg-white">
             <div class="flex space-x-4">
                 <a href="{{ route('admin.members.index', ['status' => 'pending']) }}"
-                    class="px-4 py-2 rounded-lg {{ request('status') == 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100' }}">
+                    class="px-4 py-2 rounded-lg font-medium transition-colors duration-150
+            {{ request('status') == 'pending'
+                ? 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
                     Pending Approval
                 </a>
+
                 <a href="{{ route('admin.members.index', ['status' => 'approved']) }}"
-                    class="px-4 py-2 rounded-lg {{ request('status') == 'approved' ? 'bg-green-100 text-green-800' : 'bg-gray-100' }}">
+                    class="px-4 py-2 rounded-lg font-medium transition-colors duration-150
+            {{ request('status') == 'approved'
+                ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
                     Approved
                 </a>
             </div>
         </div>
+
 
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">

@@ -66,16 +66,7 @@
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Saved Percentage</label>
-                        <select name="saved_percentage" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                            @foreach(['50', '100', '150', '200', '250', '300', 'None'] as $percentage)
-                                <option value="{{ $percentage }}" {{ old('saved_percentage') == $percentage ? 'selected' : '' }}>
-                                    {{ $percentage }}{{ $percentage !== 'None' ? '%' : '' }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    
                 </div>
 
                 <div class="flex items-center mt-4">

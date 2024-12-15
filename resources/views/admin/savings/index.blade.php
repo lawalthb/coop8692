@@ -29,10 +29,11 @@
             <tbody class="divide-y divide-gray-200">
                 @foreach($transactions as $transaction)
                 <tr>
-                    <td class="px-6 py-4">{{ $transaction->transaction_date->format('d M, Y') }}</td>
+                    <td class="px-6 py-4">{{ $transaction->created_at->format('d M, Y') }}</td>
                     <td class="px-6 py-4">{{ $transaction->user->full_name }}</td>
-                    <td class="px-6 py-4">{{ $transaction->saving_type->name }}</td>
-                    <td class="px-6 py-4">₦{{ number_format($transaction->credit_amount) }}</td>
+                    <td class="px-6 py-4">{{ $transaction->savingType?->name ?? 'N/A' }}</td>
+
+                    <td class="px-6 py-4">₦{{ number_format($transaction->amount) }}</td>
                     <td class="px-6 py-4">{{ $transaction->reference }}</td>
                     <td class="px-6 py-4">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">

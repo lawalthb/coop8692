@@ -23,7 +23,7 @@ class LoanTypeRequest extends FormRequest
             'minimum_amount' => 'required|numeric|min:0',
             'maximum_amount' => 'required|numeric|gt:minimum_amount',
             'allow_early_payment' => 'boolean',
-            'saved_percentage' => 'required|in:50,100,150,200,250,300,None',
+            'saved_percentage' => 'nullable|in:50,100,150,200,250,300,None',
             'no_guarantors' => 'required|integer|min:0',
             'status' => 'sometimes|in:active,inactive'
         ];

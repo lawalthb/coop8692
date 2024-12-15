@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->index('transactions_user_id_foreign');
+            $table->unsignedBigInteger('user_id')->index();
+            $table->morphs('transactionable');
             $table->string('type');
             $table->decimal('debit_amount', 15)->default(0);
             $table->decimal('credit_amount', 15)->default(0);
             $table->decimal('balance', 15)->default(0);
             $table->string('reference')->unique();
             $table->string('description');
-            $table->unsignedBigInteger('posted_by')->index('transactions_posted_by_foreign');
+            $table->unsignedBigInteger('posted_by')->index();
             $table->timestamp('transaction_date');
             $table->string('status')->default('completed');
             $table->timestamps();

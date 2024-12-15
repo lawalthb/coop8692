@@ -18,11 +18,7 @@
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Code</label>
-                        <input type="text" name="code" value="{{ old('code') }}" required
-                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                    </div>
+                 
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Interest Rate (%)</label>

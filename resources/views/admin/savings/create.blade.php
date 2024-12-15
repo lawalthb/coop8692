@@ -14,28 +14,36 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Member</label>
-                        <select name="user_id" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                        <select name="user_id" required>
                             <option value="">Select Member</option>
                             @foreach($members as $member)
-                                <option value="{{ $member->id }}">{{ $member->full_name }} ({{ $member->member_no }})</option>
+                                <option value="{{ $member->id }}">{{ $member->full_name }}</option>
                             @endforeach
                         </select>
+                        @error('user_id')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Saving Type</label>
-                        <select name="saving_type_id" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                            <option value="">Select Saving Type</option>
+                        <select name="saving_type_id" required>
+                            <option value="">Select Type</option>
                             @foreach($savingTypes as $type)
                                 <option value="{{ $type->id }}">{{ $type->name }}</option>
                             @endforeach
                         </select>
+                        @error('saving_type_id')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Amount</label>
-                        <input type="number" name="amount" required step="0.01" min="0"
-                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                        <input type="number" name="amount" required step="0.01" min="0">
+                        @error('amount')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div>
@@ -43,6 +51,23 @@
                         <input type="date" name="transaction_date" required
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Month</label>
+                    <select name="month_id" required class="mt-1 block w-full rounded-md border-gray-300">
+                        @foreach($months as $month)
+                        <option value="{{ $month->id }}">{{ $month->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Year</label>
+                    <select name="year_id" required class="mt-1 block w-full rounded-md border-gray-300">
+                        @foreach($years as $year)
+                        <option value="{{ $year->id }}">{{ $year->year }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="flex justify-end space-x-4">

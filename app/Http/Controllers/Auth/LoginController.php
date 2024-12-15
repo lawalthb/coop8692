@@ -22,13 +22,19 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+
+            if (auth()->user()->is_admin) {
+                return redirect()->route('admin.dashboard');
+            }
+
+            return redirect()->route('member.dashboard');
         }
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
+
 
     public function logout(Request $request)
     {

@@ -4,7 +4,8 @@
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold text-gray-800 mb-8">Dashboard</h1>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <!-- Members Stats -->
         <div class="bg-white rounded-lg shadow p-6">
             <div class="flex items-center">
@@ -48,6 +49,70 @@
                     <p class="text-2xl font-semibold text-gray-800">₦{{ number_format($data['total_savings']) }}</p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Recent Records Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Recent Members -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold mb-4">Recent Members</h2>
+            <div class="space-y-4">
+                @foreach($data['recent_members'] as $member)
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <div>
+                            <p class="font-medium">{{ $member->full_name }}</p>
+                            <p class="text-sm text-gray-600">{{ $member->member_no }}</p>
+                        </div>
+                        <span class="px-2 py-1 rounded-full text-xs {{ $member->is_approved ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                            {{ $member->is_approved ? 'Approved' : 'Pending' }}
+                        </span>
+                    </div>
+                @endforeach
+            </div>
+            <a href="{{ route('admin.members.index') }}" class="block mt-4 text-green-600 hover:text-green-700 text-sm">View all members →</a>
+        </div>
+
+        <!-- Recent Loans -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold mb-4">Recent Loan Applications</h2>
+            <div class="space-y-4">
+                @foreach($data['recent_loans'] as $loan)
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <div>
+                            <p class="font-medium">{{ $loan->user->full_name }}</p>
+                            <p class="text-sm text-gray-600">₦{{ number_format($loan->amount) }}</p>
+                        </div>
+                        <span class="px-2 py-1 rounded-full text-xs
+                            @if($loan->status === 'approved') bg-green-100 text-green-800
+                            @elseif($loan->status === 'pending') bg-yellow-100 text-yellow-800
+                            @else bg-red-100 text-red-800
+                            @endif">
+                            {{ ucfirst($loan->status) }}
+                        </span>
+                    </div>
+                @endforeach
+            </div>
+            <a href="{{ route('admin.loans.index') }}" class="block mt-4 text-green-600 hover:text-green-700 text-sm">View all loans →</a>
+        </div>
+
+        <!-- Recent Savings -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold mb-4">Recent Savings</h2>
+            <div class="space-y-4">
+                @foreach($data['recent_savings'] as $saving)
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <div>
+                            <p class="font-medium">{{ $saving->user->full_name }}</p>
+                            <p class="text-sm text-gray-600">₦{{ number_format($saving->amount) }}</p>
+                        </div>
+                        <span class="text-sm text-gray-500">
+                            {{ $saving->created_at->diffForHumans() }}
+                        </span>
+                    </div>
+                @endforeach
+            </div>
+            <a href="{{ route('admin.savings.index') }}" class="block mt-4 text-green-600 hover:text-green-700 text-sm">View all savings →</a>
         </div>
     </div>
 </div>
