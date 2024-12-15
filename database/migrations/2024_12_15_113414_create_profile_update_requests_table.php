@@ -19,8 +19,7 @@ return new class extends Migration
             $table->string('firstname')->nullable();
             $table->string('othername')->nullable();
             $table->text('home_address')->nullable();
-            $table->unsignedBigInteger('department_id')->nullable()->index('profile_update_requests_department_id_foreign');
-            $table->unsignedBigInteger('faculty_id')->nullable()->index('profile_update_requests_faculty_id_foreign');
+         $table->string('gender')->enum('male', 'female')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
             $table->date('dob')->nullable();
