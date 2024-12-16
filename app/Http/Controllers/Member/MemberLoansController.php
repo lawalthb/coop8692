@@ -8,7 +8,7 @@ use App\Models\LoanType;
 use App\Http\Requests\LoanApplicationRequest;
 use Illuminate\Support\Str;
 
-class LoansController extends Controller
+class MemberLoansController extends Controller
 {
     public function index()
     {
@@ -23,8 +23,9 @@ class LoansController extends Controller
                 ->get(),
             'loan_types' => LoanType::where('status', 'active')->get()
         ];
-
-        return view('member.loans.index', compact('data'));
+        $loans = Loan::where('user_id', auth()->id())->latest()->get();
+        $loanTypes = LoanType::where('status', 'active')->get();
+        return view('member.loans.index', compact('data', 'loans', 'loanTypes'));
     }
 
     public function create()

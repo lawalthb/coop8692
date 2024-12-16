@@ -17,6 +17,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Member\DashboardController;
 use App\Http\Controllers\Member\LoanCalculatorController;
 use App\Http\Controllers\Member\LoanReportController;
+use App\Http\Controllers\Member\MemberLoansController;
 use App\Http\Controllers\Member\ProfileController;
 use App\Http\Controllers\Member\SavingsController;
 use App\Http\Controllers\Member\SavingsReportController;
@@ -37,6 +38,7 @@ use App\Models\Loan;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
+Route::get('/home', [DashboardController::class, 'index'])->name('home');
 
 
 // Authentication Routes
@@ -104,8 +106,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::patch('members/{member}/approve', [MemberController::class, 'approve'])->name('members.approve');
 
     Route::patch('members/{member}/approve', [MemberController::class, 'approve'])->name('members.approve');
-
-
 });
 
 // Member routes
@@ -142,11 +142,19 @@ Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(
 
 
     //Loan
-    Route::get('/loans', [Member/LoanController::class, 'index'])->name('loans.index');
-    Route::get('/loans/create', [LoanController::class, 'create'])->name('loans.create');
-    Route::post('/loans', [LoanController::class, 'store'])->name('loans.store');
-    Route::get('/loans/{loan}', [LoanController::class, 'show'])->name('loans.show');
+    Route::get('/loans', [MemberLoansController::class, 'index'])->name('loans.index');
+    Route::get('/loans/create', [MemberLoansController::class, 'create'])->name('loans.create');
+    Route::post('/loans', [MemberLoansController::class, 'store'])->name('loans.store');
+    Route::get('/loans/{loan}', [MemberLoansController::class, 'show'])->name('loans.show');
+
+    Route::post('/loan-calculator', [LoanCalculatorController::class, 'calculate'])
+    ->name('loan.calculate');
+
+    Route::get('/loan-calculator', [LoanCalculatorController::class, 'index'])->name('loan.calculator');
 });
+
+
+
 
 // API Routes
 Route::get('/api/states/{state}/lgas', function ($state) {
