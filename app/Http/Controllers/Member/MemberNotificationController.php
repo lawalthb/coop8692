@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Member;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class NotificationController extends Controller
+class MemberNotificationController extends Controller
 {
     public function index()
     {

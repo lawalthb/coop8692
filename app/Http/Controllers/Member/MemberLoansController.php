@@ -33,16 +33,31 @@ class MemberLoansController extends Controller
         $loanTypes = LoanType::where('status', 'active')->get();
         return view('member.loans.create', compact('loanTypes'));
     }
-
     public function store(LoanApplicationRequest $request)
     {
+        $loanType = LoanType::findOrFail($request->loan_type_id);
+
+        // Calculate loan details
+        $interestRate = $request->duration == 12 ?
+            $loanType->interest_rate_12_months :
+            $loanType->interest_rate_18_months;
+
+        $interestAmount = ($request->amount * $interestRate / 100);
+        $totalAmount = $request->amount + $interestAmount;
+        $monthlyPayment = $totalAmount / $request->duration;
+
         $loan = Loan::create([
             'user_id' => auth()->id(),
             'loan_type_id' => $request->loan_type_id,
             'reference' => 'LOAN' . Str::random(8),
             'amount' => $request->amount,
+            'interest_amount' => $interestAmount,
+            'total_amount' => $totalAmount,
+            'monthly_payment' => $monthlyPayment,
             'duration' => $request->duration,
             'purpose' => $request->purpose,
+            'start_date' => now(),
+            'end_date' => now()->addMonths($request->duration),
             'status' => 'pending',
             'posted_by' => auth()->id()
         ]);

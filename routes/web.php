@@ -18,6 +18,9 @@ use App\Http\Controllers\Member\DashboardController;
 use App\Http\Controllers\Member\LoanCalculatorController;
 use App\Http\Controllers\Member\LoanReportController;
 use App\Http\Controllers\Member\MemberLoansController;
+use App\Http\Controllers\Member\MemberNotificationController;
+use App\Http\Controllers\Member\MemberProfileController;
+use App\Http\Controllers\Member\MemberResourceController;
 use App\Http\Controllers\Member\ProfileController;
 use App\Http\Controllers\Member\SavingsController;
 use App\Http\Controllers\Member\SavingsReportController;
@@ -112,9 +115,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Profile Management
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     // Savings Management
     Route::get('/savings', [SavingsController::class, 'index'])->name('savings.index');
@@ -131,8 +131,6 @@ Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(
     Route::get('/reports/loans', [LoanReportController::class, 'index'])->name('reports.loans');
 
 
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
 
     // Notifications
@@ -151,13 +149,25 @@ Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(
     ->name('loan.calculate');
 
     Route::get('/loan-calculator', [LoanCalculatorController::class, 'index'])->name('loan.calculator');
+
+    Route::resource('resources', MemberResourceController::class)->only(['index', 'show']);
+    Route::get('resources/{resource}/download', [MemberResourceController::class, 'download'])->name('resources.download');
+
+    // Profile routes
+    Route::get('/profile', [MemberProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profile', [MemberProfileController::class, 'update'])->name('profile.update');
+
+    Route::get('/notifications', [MemberNotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [MemberNotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::post('/notifications/read-all', [MemberNotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+
 });
 
 
 
 
 // API Routes
-Route::get('/api/states/{state}/lgas', function ($state) {
+Route::get('/states/{state}/lgas', function ($state) {
     return \App\Models\Lga::where('state_id', $state)
         ->where('status', 'active')
         ->get();

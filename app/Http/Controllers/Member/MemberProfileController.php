@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
-class ProfileController extends Controller
+class MemberProfileController extends Controller
 {
     public function show()
     {
