@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+
+<!-- WhatsApp Open Graph Tags -->
+    <meta property="og:site_name" content="COOP8692">
+    <meta property="og:title" content="COOP8692 - Cooperative Society">
+    <meta property="og:description" content="Building financial freedom through cooperative savings and loans">
+    <meta property="og:image" content="{{ asset('images/logo.png') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+
+
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -16,7 +27,7 @@
 </head>
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
-      
+
 
         <!-- Page Content -->
         <main>
