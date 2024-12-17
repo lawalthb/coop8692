@@ -1,5 +1,6 @@
 <?php
 $currentBalance = 0;
+$newAmount = 0;
 function generateReference($prefix = '')
 {
     return $prefix . time() . rand(1000, 9999);
