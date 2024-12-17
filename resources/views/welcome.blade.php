@@ -4,7 +4,7 @@
     <div class="container mx-auto px-4 py-10">
         <div class="flex items-center justify-between">
             <div class="max-w-3xl">
-                <h1 class="text-6xl font-bold mb-6 leading-tight">Welcome to '86/'92 of Compronians</h1>
+                <h1 class="text-6xl font-bold mb-6 leading-tight">Welcome to Compronians 8692 COOP</h1>
                 <p class="text-xl mb-12 leading-relaxed">86/92 cooperative society charter.</p>
                 <div class="space-x-6">
                     <a href="{{ route('login') }}" class="bg-white text-green-700 px-8 py-4 rounded-lg hover:bg-gray-100 font-semibold transition duration-300">Login</a>
@@ -17,8 +17,7 @@
                     autoplay
                     loop
                     muted
-                    playsinline
-                >
+                    playsinline>
                     <source src="{{ asset('images/vid.mp4') }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
