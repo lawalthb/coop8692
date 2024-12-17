@@ -74,7 +74,7 @@ class MemberController extends Controller
             'email' => $validated['email'],
             'phone_number' => $validated['phone_number'],
             'password' => Hash::make($validated['password']),
-            'member_no' => 'COOP' . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT),
+            'member_no' => 'C8692' . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT),
             'is_approved' => true,
             'approved_at' => now(),
             'approved_by' => auth()->id(),

@@ -1,21 +1,32 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="hero-section text-white relative">
     <div class="container mx-auto px-4 py-10">
-        <div class="max-w-3xl">
-            <h1 class="text-6xl font-bold mb-6 leading-tight">Welcome to '86/'92 of Compronians </h1>
-            <p class="text-xl mb-12 leading-relaxed">86/92 cooperative society charter.
-            </p>
-            <div class="space-x-6">
-                <a href="{{ route('login') }}" class="bg-white text-green-700 px-8 py-4 rounded-lg hover:bg-gray-100 font-semibold transition duration-300">Login</a>
-                <a href="/about" class="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white hover:text-green-700 font-semibold transition duration-300">Know More</a>
+        <div class="flex items-center justify-between">
+            <div class="max-w-3xl">
+                <h1 class="text-6xl font-bold mb-6 leading-tight">Welcome to '86/'92 of Compronians</h1>
+                <p class="text-xl mb-12 leading-relaxed">86/92 cooperative society charter.</p>
+                <div class="space-x-6">
+                    <a href="{{ route('login') }}" class="bg-white text-green-700 px-8 py-4 rounded-lg hover:bg-gray-100 font-semibold transition duration-300">Login</a>
+                    <a href="/about" class="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white hover:text-green-700 font-semibold transition duration-300">Know More</a>
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <video
+                    class="w-96 rounded-lg shadow-xl border-4 border-white"
+                    autoplay
+                    loop
+                    muted
+                    playsinline
+                >
+                    <source src="{{ asset('images/vid.mp4') }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
         </div>
     </div>
     <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white"></div>
 </div>
-
 <div class="py-10 bg-white">
     <div class="container mx-auto px-4">
         <div class="text-center mb-16">

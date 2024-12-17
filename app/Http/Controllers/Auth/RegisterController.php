@@ -36,7 +36,7 @@ class RegisterController extends Controller
             'password' => Hash::make($validated['password']),
             'state_id' => $validated['state_id'],
             'lga_id' => $validated['lga_id'],
-            'member_no' => 'COOP' . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT),
+            'member_no' => 'C8692' . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT),
         ]);
 
         Mail::to($user->email)->send(new WelcomeMember($user));
