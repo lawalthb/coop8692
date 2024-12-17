@@ -6,17 +6,12 @@ function generateReference($prefix = '')
 }
 
     return $currentBalance + $newAmount;
-function calculateNewBalance($userId, $newAmount)
-{
-    $lastTransaction = \App\Models\Transaction::where('user_id', $userId)
-        ->latest()
-        ->first();
+function calculateBalance($transactions) {
+    $currentBalance = 0; // Initialize balance
 
-    if (!$lastTransaction) {
-        return $newAmount;
+    foreach ($transactions as $transaction) {
+        $currentBalance += $transaction->credit_amount - $transaction->debit_amount;
     }
 
-    $currentBalance = $lastTransaction->balance;
-    return $currentBalance + $newAmount;
+    return $currentBalance;
 }
-
