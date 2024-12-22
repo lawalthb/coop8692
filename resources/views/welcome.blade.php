@@ -51,7 +51,7 @@
                     </svg>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">Quick Loans</h3>
-                <p class="text-gray-600">Access affordable loans with competitive interest rates and flexible repayment terms</p>
+                <p class="text-gray-600">Access affordable loans with competitive service rates and flexible repayment terms</p>
             </div>
 
             <div class="text-center p-8 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300">

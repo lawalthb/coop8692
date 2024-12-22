@@ -10,8 +10,8 @@ class LoanType extends Model
         'name',
         'required_active_savings_months',
         'savings_multiplier',
-        'interest_rate_12_months',
-        'interest_rate_18_months',
+        'interest_rate',
+
         'max_duration_months',
         'minimum_amount',
         'maximum_amount',
@@ -32,9 +32,8 @@ class LoanType extends Model
 
     public function getInterestRateAttribute()
     {
-        return $this->interest_rate_12_months;
+        return $this->attributes['interest_rate'];
     }
-
     public function scopeActive($query)
     {
         return $query->where('status', 'active');

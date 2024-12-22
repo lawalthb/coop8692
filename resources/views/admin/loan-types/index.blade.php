@@ -14,8 +14,8 @@
             <thead class="bg-gray-50">
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Interest Rate (12m)</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Interest Rate (18m)</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Service Charge</th>
+
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Min Amount</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Max Amount</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
@@ -26,8 +26,8 @@
                 @foreach($loanTypes as $type)
                 <tr>
                     <td class="px-6 py-4">{{ $type->name }}</td>
-                    <td class="px-6 py-4">{{ $type->interest_rate_12_months }}%</td>
-                    <td class="px-6 py-4">{{ $type->interest_rate_18_months }}%</td>
+                    <td class="px-6 py-4">{{ $type->interest_rate }}%</td>
+
                     <td class="px-6 py-4">₦{{ number_format($type->minimum_amount) }}</td>
                     <td class="px-6 py-4">₦{{ number_format($type->maximum_amount) }}</td>
                     <td class="px-6 py-4">

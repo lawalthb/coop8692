@@ -41,7 +41,7 @@ use App\Models\Loan;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
-Route::get('/home', [DashboardController::class, 'index'])->name('home');
+//Route::get('/home', [DashboardController::class, 'index'])->name('home');
 
 
 // Authentication Routes
@@ -111,6 +111,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::patch('members/{member}/approve', [MemberController::class, 'approve'])->name('members.approve');
 });
 
+
+
+
 // Member routes
 Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -146,9 +149,13 @@ Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(
     Route::get('/loans/{loan}', [MemberLoansController::class, 'show'])->name('loans.show');
 
     Route::post('/loan-calculator', [LoanCalculatorController::class, 'calculate'])
-    ->name('loan.calculate');
+        ->name('loan.calculate');
 
     Route::get('/loan-calculator', [LoanCalculatorController::class, 'index'])->name('loan.calculator');
+
+
+
+
 
     Route::resource('resources', MemberResourceController::class)->only(['index', 'show']);
     Route::get('resources/{resource}/download', [MemberResourceController::class, 'download'])->name('resources.download');
@@ -160,7 +167,6 @@ Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(
     Route::get('/notifications', [MemberNotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/{id}/read', [MemberNotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
     Route::post('/notifications/read-all', [MemberNotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
-
 });
 
 
@@ -172,3 +178,4 @@ Route::get('/states/{state}/lgas', function ($state) {
         ->where('status', 'active')
         ->get();
 });
+Route::get('member/loans/guarantor2', [MemberLoansController::class, 'show'])->name('member.loans.guarantor');

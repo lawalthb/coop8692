@@ -17,8 +17,8 @@ class LoanTypeRequest extends FormRequest
             'name' => 'required|string|max:255',
             'required_active_savings_months' => 'required|integer|min:0',
             'savings_multiplier' => 'required|numeric|min:0',
-            'interest_rate_12_months' => 'required|numeric|min:0|max:100',
-            'interest_rate_18_months' => 'required|numeric|min:0|max:100',
+            'interest_rate' => 'required|numeric|min:0|max:100',
+           
             'max_duration_months' => 'required|integer|min:1|max:18',
             'minimum_amount' => 'required|numeric|min:0',
             'maximum_amount' => 'required|numeric|gt:minimum_amount',

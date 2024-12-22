@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Loan;
 use App\Models\LoanType;
 use App\Http\Requests\LoanApplicationRequest;
+use App\Models\User;
 use Illuminate\Support\Str;
+use App\Models\LoanGuarantor;
+use App\Notifications\GuarantorRequestNotification;
+use Illuminate\Support\Facades\Notification;
 
 class MemberLoansController extends Controller
 {
@@ -31,16 +35,16 @@ class MemberLoansController extends Controller
     public function create()
     {
         $loanTypes = LoanType::where('status', 'active')->get();
-        return view('member.loans.create', compact('loanTypes'));
+        $members = User::where('id', '!=', auth()->user()->id)->get();
+        return view('member.loans.create', compact('loanTypes', 'members'));
     }
+
     public function store(LoanApplicationRequest $request)
     {
         $loanType = LoanType::findOrFail($request->loan_type_id);
 
         // Calculate loan details
-        $interestRate = $request->duration == 12 ?
-            $loanType->interest_rate_12_months :
-            $loanType->interest_rate_18_months;
+        $interestRate = $request->duration;
 
         $interestAmount = ($request->amount * $interestRate / 100);
         $totalAmount = $request->amount + $interestAmount;
@@ -62,7 +66,30 @@ class MemberLoansController extends Controller
             'posted_by' => auth()->id()
         ]);
 
-        return redirect()->route('member.loans.index')
-            ->with('success', 'Loan application submitted successfully');
+        if ($request->has('guarantors')) {
+            foreach ($request->guarantors as $guarantorId) {
+                // Create guarantor record
+                $guarantor = LoanGuarantor::create([
+                    'loan_id' => $loan->id,
+                    'user_id' => $guarantorId,
+                    'status' => 'pending',
+                    'responded_at' => null
+                ]);
+
+                $guarantorUser = User::find($guarantorId);
+                $guarantorUser->notify(new GuarantorRequestNotification($loan));
+
+                return redirect()->route('member.loans.index')
+                    ->with('success', 'Loan application submitted successfully and guarantors have been notified');
+            }
+        }
+    }
+
+
+    public function show(Loan $loan)
+    {
+        dd(1);
+        $loan->load(['loanType', 'guarantors']);
+        return view('member.loans.show', compact('loan'));
     }
 }

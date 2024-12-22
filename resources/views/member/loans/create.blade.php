@@ -13,9 +13,10 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Loan Type</label>
-                    <select name="loan_type_id" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                    <select name="loan_type_id" id="loan_type_id" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500" onchange="showGuarantorFields()">
+                        <option value="">Select Loan Type</option>
                         @foreach($loanTypes as $type)
-                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                        <option value="{{ $type->id }}" data-guarantors="{{ $type->no_guarantors }}">{{ $type->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -29,9 +30,9 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Duration (Months)</label>
                     <select name="duration" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                        @for($i = 6; $i <= 18; $i += 6)
-                            <option value="{{ $i }}">{{ $i }} months</option>
-                        @endfor
+
+                        <option value="4">4 months</option>
+
                     </select>
                 </div>
 
@@ -40,6 +41,10 @@
                     <textarea name="purpose" required rows="3"
                         class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500"></textarea>
                 </div>
+
+
+                <div id="guarantor_fields" class="space-y-4"></div>
+
 
                 <div class="flex justify-end space-x-4">
                     <a href="{{ route('member.loans.index') }}"
@@ -55,43 +60,32 @@
         </div>
     </div>
 </div>
-@endsection
 
-@push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const loanTypeSelect = document.querySelector('[name="loan_type_id"]');
-    const amountInput = document.querySelector('[name="amount"]');
-    const durationSelect = document.querySelector('[name="duration"]');
+    function showGuarantorFields() {
+       
+        const loanTypeSelect = document.getElementById('loan_type_id');
+        const selectedOption = loanTypeSelect.options[loanTypeSelect.selectedIndex];
+        const guarantorCount = selectedOption.dataset.guarantors;
+        const guarantorContainer = document.getElementById('guarantor_fields');
 
-    function calculateLoan() {
-        const loanType = @json($loanTypes);
-        const selectedLoan = loanType.find(type => type.id == loanTypeSelect.value);
+        guarantorContainer.innerHTML = '';
 
-        if (selectedLoan) {
-            const amount = parseFloat(amountInput.value);
-            const duration = parseInt(durationSelect.value);
-
-            // Validate amount limits
-            if (amount < selectedLoan.minimum_amount) {
-                amountInput.value = selectedLoan.minimum_amount;
-            } else if (amount > selectedLoan.maximum_amount) {
-                amountInput.value = selectedLoan.maximum_amount;
-            }
-
-            // Calculate interest based on duration
-            const interestRate = duration <= 12 ?
-                selectedLoan.interest_rate_12_months :
-                selectedLoan.interest_rate_18_months;
-
-            // Update UI with calculations
-            updateCalculations(amount, interestRate, duration);
+        for (let i = 0; i < guarantorCount; i++) {
+            const guarantorField = `
+            <div class="border p-4 rounded-lg">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Guarantor ${i + 1}</label>
+                <select name="guarantors[]" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                    <option value="">Select Guarantor</option>
+                    @foreach($members as $member)
+                        <option value="{{ $member->id }}">{{ $member->full_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        `;
+            guarantorContainer.insertAdjacentHTML('beforeend', guarantorField);
         }
     }
-
-    [loanTypeSelect, amountInput, durationSelect].forEach(element => {
-        element.addEventListener('change', calculateLoan);
-    });
-});
 </script>
-@endpush
+
+@endsection

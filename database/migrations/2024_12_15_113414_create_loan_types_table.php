@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->integer('required_active_savings_months')->default(6);
             $table->decimal('savings_multiplier', 5)->default(2);
-            $table->decimal('interest_rate_12_months', 5)->default(10);
-            $table->decimal('interest_rate_18_months', 5)->default(15);
-            $table->integer('max_duration_months')->default(18);
+            $table->decimal('interest_rate', 5)->default(10);
+
+            $table->integer('max_duration_months')->default(4);
             $table->decimal('minimum_amount', 15);
             $table->decimal('maximum_amount', 15);
             $table->boolean('allow_early_payment')->default(true);

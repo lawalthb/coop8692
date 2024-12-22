@@ -29,23 +29,17 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Savings Multiplier</label>
                         <input type="number" name="savings_multiplier"
-                            value="{{ old('savings_multiplier', $loanType->savings_multiplier) }}" step="0.1" required
+                            value="{{ old('savings_multiplier', $loanType->savings_multiplier) }}" step="1" required
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Interest Rate (12 Months)</label>
-                        <input type="number" name="interest_rate_12_months"
-                            value="{{ old('interest_rate_12_months', $loanType->interest_rate_12_months) }}" step="0.1" required
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Service Rate</label>
+                        <input type="number" name="interest_rate"
+                            value="{{ old('interest_rate', $loanType->interest_rate) }}" step="1" required
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Interest Rate (18 Months)</label>
-                        <input type="number" name="interest_rate_18_months"
-                            value="{{ old('interest_rate_18_months', $loanType->interest_rate_18_months) }}" step="0.1" required
-                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                    </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Maximum Duration (Months)</label>
@@ -75,17 +69,7 @@
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Saved Percentage</label>
-                        <select name="saved_percentage" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                            @foreach(['50', '100', '150', '200', '250', '300', 'None'] as $percentage)
-                                <option value="{{ $percentage }}"
-                                    {{ old('saved_percentage', $loanType->saved_percentage) == $percentage ? 'selected' : '' }}>
-                                    {{ $percentage }}{{ $percentage !== 'None' ? '%' : '' }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    
                 </div>
 
                 <div class="flex items-center mt-4">

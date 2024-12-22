@@ -35,7 +35,7 @@
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reference</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                        <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th> -->
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Balance</th>
                     </tr>
@@ -45,7 +45,7 @@
                     <tr>
                         <td class="px-6 py-4">{{ $transaction->transaction_date->format('d M, Y') }}</td>
                         <td class="px-6 py-4">{{ $transaction->reference }}</td>
-                        <td class="px-6 py-4">{{ $transaction->description }}</td>
+                        <!-- <td class="px-6 py-4">{{ $transaction->description }}</td> -->
                         <td class="px-6 py-4">
                             @if($transaction->credit_amount > 0)
                                 <span class="text-green-600">+₦{{ number_format($transaction->credit_amount) }}</span>

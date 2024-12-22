@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    
+
 
     @push('scripts')
     <script>

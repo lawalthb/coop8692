@@ -26,25 +26,21 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Savings Multiplier</label>
-                        <input type="number" name="savings_multiplier" value="{{ old('savings_multiplier', 2) }}" step="0.1" required
+                        <input type="number" name="savings_multiplier" value="{{ old('savings_multiplier', 3) }}" step="0.1" required
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Interest Rate (12 Months)</label>
-                        <input type="number" name="interest_rate_12_months" value="{{ old('interest_rate_12_months', 10) }}" step="0.1" required
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Services Charge (%)</label>
+                        <input type="number" name="interest_rate" value="{{ old('interest_rate', 5) }}" step="1" required
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Interest Rate (18 Months)</label>
-                        <input type="number" name="interest_rate_18_months" value="{{ old('interest_rate_18_months', 15) }}" step="0.1" required
-                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                    </div>
+
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Maximum Duration (Months)</label>
-                        <input type="number" name="max_duration_months" value="{{ old('max_duration_months', 18) }}" required
+                        <input type="number" name="max_duration_months" value="{{ old('max_duration_months', 4) }}" required
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
 
@@ -66,7 +62,7 @@
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
 
-                    
+
                 </div>
 
                 <div class="flex items-center mt-4">
