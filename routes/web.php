@@ -41,7 +41,7 @@ use App\Models\Loan;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
-//Route::get('/home', [DashboardController::class, 'index'])->name('home');
+Route::get('/home', [DashboardController::class, 'index'])->name('home');
 
 
 // Authentication Routes

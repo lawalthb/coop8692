@@ -19,15 +19,13 @@ class LoanCalculatorController extends Controller
         $request->validate([
             'loan_type_id' => 'required|exists:loan_types,id',
             'amount' => 'required|numeric|min:0',
-            'duration' => 'required|integer|min:6|max:18'
+            'duration' => 'required|integer|min:4|max:4'
         ]);
 
         $loanType = LoanType::findOrFail($request->loan_type_id);
         $userSavings = auth()->user()->getTotalSavings();
 
-        $interestRate = $request->duration <= 12 ?
-            $loanType->interest_rate_12_months :
-            $loanType->interest_rate_18_months;
+        $interestRate = $request->duration ;
 
         $data = [
             'eligible' => $this->checkEligibility($loanType, $request->amount, $userSavings),

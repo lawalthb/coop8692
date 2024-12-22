@@ -27,9 +27,9 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Duration (Months)</label>
                     <select name="duration" id="duration" required>
-                        <option value="">Select Duration</option>
-                        <option value="12">12 Months</option>
-                        <option value="18">18 Months</option>
+
+                        <option value="4">4 Months</option>
+
                     </select>
                 </div>
 
