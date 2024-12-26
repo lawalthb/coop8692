@@ -78,10 +78,9 @@ class MemberLoansController extends Controller
 
                 $guarantorUser = User::find($guarantorId);
                 $guarantorUser->notify(new GuarantorRequestNotification($loan));
-
-                return redirect()->route('member.loans.index')
-                    ->with('success', 'Loan application submitted successfully and guarantors have been notified');
             }
+            return redirect()->route('member.loans.index')
+                ->with('success', 'Loan application submitted successfully and guarantors have been notified');
         }
     }
 
