@@ -17,3 +17,12 @@ function calculateBalance($transactions)
 
     return $currentBalance;
 }
+
+function calculateNewBalance($userId, $amount) {
+    $lastTransaction = \App\Models\Transaction::where('user_id', $userId)
+        ->latest()
+        ->first();
+
+    $currentBalance = $lastTransaction ? $lastTransaction->balance : 0;
+    return $currentBalance + $amount;
+}
