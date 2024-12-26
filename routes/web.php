@@ -129,6 +129,18 @@ Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(
     Route::get('/loans/calculator', [LoanCalculatorController::class, 'index'])->name('loans.calculator');
     Route::post('/loans/calculate', [LoanCalculatorController::class, 'calculate'])->name('loans.calculate');
 
+    // guarantor request
+
+    Route::get('/member/guarantor-requests', [MemberLoansController::class, 'guarantorRequests'])
+        ->name('loans.guarantor-requests');
+
+    Route::get('/loans/guarantor/{id}', [MemberLoansController::class, 'show'])->name('loans.guarantor');
+
+
+    Route::post('/loans/{loan}/guarantor/respond', [MemberLoansController::class, 'guarantorRespond'])
+        ->name('loans.guarantor.respond');
+
+
     // Reports
     Route::get('/reports/savings', [SavingsReportController::class, 'index'])->name('reports.savings');
     Route::get('/reports/loans', [LoanReportController::class, 'index'])->name('reports.loans');
@@ -157,6 +169,7 @@ Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(
 
 
 
+
     Route::resource('resources', MemberResourceController::class)->only(['index', 'show']);
     Route::get('resources/{resource}/download', [MemberResourceController::class, 'download'])->name('resources.download');
 
@@ -167,7 +180,7 @@ Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(
     Route::get('/notifications', [MemberNotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/{id}/read', [MemberNotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
     Route::post('/notifications/read-all', [MemberNotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
-});
+}); //end of member routes
 
 
 
@@ -178,4 +191,3 @@ Route::get('/states/{state}/lgas', function ($state) {
         ->where('status', 'active')
         ->get();
 });
-Route::get('member/loans/guarantor2', [MemberLoansController::class, 'show'])->name('member.loans.guarantor');

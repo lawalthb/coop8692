@@ -74,35 +74,36 @@
                     <h3 class="text-lg font-semibold mb-4">Guarantors</h3>
                     <div class="grid grid-cols-2 gap-4">
                         @foreach($loan->guarantors as $guarantor)
-                            <div class="border rounded-lg p-4">
-                                <p class="font-medium">{{ $guarantor->user->full_name }}</p>
-                                <p class="text-sm text-gray-600">Status:
-                                    <span class="font-medium
+                        <div class="border rounded-lg p-4">
+                            <p class="font-medium">{{ $guarantor->user->full_name }}</p>
+                            <p class="text-sm text-gray-600">Status:
+                                <span class="font-medium
                                         @if($guarantor->status === 'approved') text-green-600
                                         @elseif($guarantor->status === 'rejected') text-red-600
                                         @else text-yellow-600
                                         @endif">
-                                        {{ ucfirst($guarantor->status) }}
-                                    </span>
-                                </p>
-                            </div>
+                                    {{ ucfirst($guarantor->status) }}
+                                </span>
+                            </p>
+                        </div>
                         @endforeach
                     </div>
                 </div>
 
                 @if($loan->status === 'pending')
-                    <div class="border-t pt-6 flex justify-end space-x-4">
-                        <button onclick="document.getElementById('rejectModal').classList.remove('hidden')"
-                            class="px-4 py-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-50">
-                            Reject
+                <div class="border-t pt-6 flex justify-end space-x-4">
+                    <button onclick="document.getElementById('rejectModal').classList.remove('hidden')"
+                        class="px-4 py-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-50">
+                        Reject
+                    </button>
+                    <form action="{{ route('admin.loans.approve', $loan) }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                            Approve
                         </button>
-                        <form action="{{ route('admin.loans.approve', $loan) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                                Approve
-                            </button>
-                        </form>
-                    </div>
+                    </form>
+                </div>
                 @endif
             </div>
         </div>
@@ -116,6 +117,7 @@
             <h3 class="text-lg font-semibold mb-4">Reject Loan Application</h3>
             <form action="{{ route('admin.loans.reject', $loan) }}" method="POST">
                 @csrf
+
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Reason for Rejection</label>
                     <textarea name="rejection_reason" required rows="3"

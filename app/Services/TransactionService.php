@@ -39,7 +39,7 @@ class TransactionService
         return Transaction::create([
             'user_id' => $userId,
             'type' => 'loan_' . $type,
-            'loan_id' => $loanId,
+          
             'debit_amount' => $isRepayment ? 0 : $amount,
             'credit_amount' => $isRepayment ? $amount : 0,
             'balance' => $previousBalance + ($isRepayment ? $amount : -$amount),

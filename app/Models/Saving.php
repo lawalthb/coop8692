@@ -33,5 +33,11 @@ class Saving extends Model
         return $this->belongsTo(User::class, 'posted_by');
     }
 
-    
+
+
+
+public function transactions()
+{
+    return $this->morphMany(Transaction::class, 'transactionable');
+}
 }

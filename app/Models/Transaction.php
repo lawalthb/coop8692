@@ -11,6 +11,8 @@ class Transaction extends Model
 
     protected $fillable = [
         'user_id',
+        'transactionable_id',
+        'transactionable_type',
         'type',
         'debit_amount',
         'credit_amount',
@@ -20,8 +22,7 @@ class Transaction extends Model
         'posted_by',
         'transaction_date',
         'status',
-        'saving_type_id',
-        'loan_id'
+
     ];
 
     protected $casts = [
@@ -41,5 +42,10 @@ class Transaction extends Model
     public function postedBy()
     {
         return $this->belongsTo(User::class, 'posted_by');
+    }
+
+    public function transactionable()
+    {
+        return $this->morphTo();
     }
 }

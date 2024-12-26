@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use App\Models\LoanGuarantor;
 use App\Notifications\GuarantorRequestNotification;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 
 class MemberLoansController extends Controller
@@ -87,8 +88,40 @@ class MemberLoansController extends Controller
 
     public function show(Loan $loan)
     {
-        dd(1);
-        $loan->load(['loanType', 'guarantors']);
+        $loan->load(['loanType', 'guarantors', 'user']);
         return view('member.loans.show', compact('loan'));
     }
+
+
+
+    public function guarantorRespond(Request $request, Loan $loan)
+    {
+        $guarantor = $loan->guarantors()->where('user_id', auth()->id())->firstOrFail();
+        $guarantor->update([
+            'status' => $request->response,
+            'responded_at' => now()
+        ]);
+
+        return redirect()->back()->with('success', 'Your response has been recorded');
+    }
+
+    public function guarantorRequests()
+    {
+        $pendingRequests = LoanGuarantor::with(['loan', 'loan.user', 'loan.loanType'])
+        ->where('user_id', auth()->id())
+            ->where('status', 'pending')
+            ->latest()
+            ->get();
+
+        $approvedRequests = LoanGuarantor::with(['loan', 'loan.user', 'loan.loanType'])
+        ->where('user_id', auth()->id())
+            ->where('status', 'approved')
+            ->latest()
+            ->get();
+
+        return view('member.loans.guarantor-requests', compact('pendingRequests', 'approvedRequests'));
+    }
+
 }
+
+

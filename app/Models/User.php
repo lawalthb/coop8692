@@ -48,12 +48,15 @@ class User extends Authenticatable
         'is_admin',
         'is_approved'
     ];
-
+    protected $appends = ['full_name'];
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
+
+   
+
     protected $hidden = [
         'password',
         'remember_token',
