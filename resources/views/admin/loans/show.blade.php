@@ -18,6 +18,9 @@
             <div class="p-6">
                 <div class="grid grid-cols-2 gap-6 mb-6">
                     <div>
+
+
+
                         <h3 class="text-lg font-semibold mb-4">Loan Information</h3>
                         <dl class="space-y-2">
                             <div class="flex justify-between">
@@ -50,6 +53,15 @@
                     <div>
                         <h3 class="text-lg font-semibold mb-4">Member Information</h3>
                         <dl class="space-y-2">
+
+                            <div class="flex justify-between">
+                                <dt class="text-gray-600">Member Photo:</dt>
+                                <dd class="font-medium"><img src="{{ $loan->user->member_image ? asset('storage/' .  $loan->user->member_image) : asset('images/avatar.png') }}"
+                                        alt="Profile Picture"
+                                        class="rounded-full object-cover border-4 border-green-100" width="100" height="100"></dd>
+                            </div>
+
+
                             <div class="flex justify-between">
                                 <dt class="text-gray-600">Name:</dt>
                                 <dd class="font-medium">{{ $loan->user->full_name }}</dd>

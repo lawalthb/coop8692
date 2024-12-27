@@ -72,7 +72,7 @@
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Profile Picture (Required)</label>
-                                <input type="file" name="member_image" accept="image/*" 
+                                <input type="file" name="member_image" accept="image/*"
                                     class="w-full border border-gray-300 rounded-lg p-2">
                             </div>
 
@@ -224,3 +224,9 @@
 </script>
 @endpush
 @endsection
+
+<div class="flex justify-center mb-6">
+    <img src="{{ $user->member_image ? asset('storage/' . $user->member_image) : asset('images/avatar.png') }}"
+         alt="Profile Picture"
+         class="w-32 h-32 rounded-full object-cover border-4 border-green-100">
+</div>
