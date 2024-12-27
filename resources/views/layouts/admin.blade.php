@@ -87,20 +87,20 @@
                                     </a>
 
 
-                                        <a href="{{ route('admin.profile-updates.index') }}" class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.profile-updates.*') ? 'bg-green-50 text-green-700' : '' }}">
-                                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                            </svg>
-                                            Profile Request
-                                            @php
-                                            $pendingCount = \App\Models\ProfileUpdateRequest::where('status', 'pending')->count();
-                                            @endphp
-                                            @if($pendingCount > 0)
-                                            <span class="ml-2 px-2 py-1 text-xs bg-red-500 text-white rounded-full">
-                                                {{ $pendingCount }}
-                                            </span>
-                                            @endif
-                                        </a>
+                                    <a href="{{ route('admin.profile-updates.index') }}" class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.profile-updates.*') ? 'bg-green-50 text-green-700' : '' }}">
+                                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                        Profile Request
+                                        @php
+                                        $pendingCount = \App\Models\ProfileUpdateRequest::where('status', 'pending')->count();
+                                        @endphp
+                                        @if($pendingCount > 0)
+                                        <span class="ml-2 px-2 py-1 text-xs bg-red-500 text-white rounded-full">
+                                            {{ $pendingCount }}
+                                        </span>
+                                        @endif
+                                    </a>
 
                                     <a href="{{ route('admin.saving-types.index') }}" class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.saving-types.*') ? 'bg-green-50 text-green-700' : '' }}">
                                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,6 +150,14 @@
                                         </span>
                                         @endif
                                     </a>
+
+                                    <a href="{{ route('admin.reports.index') }}" class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.reports.*') ? 'bg-green-50 text-green-700' : '' }}">
+                                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                        Reports
+                                    </a>
+
                                 </div>
                             </div>
                             <div class="space-y-1">
@@ -201,5 +209,3 @@
 </body>
 
 </html>
-
-<!-- Add this in the head section -->

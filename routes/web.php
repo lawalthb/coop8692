@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDisputeController;
+use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\Admin\AdminTransactionController;
 use App\Http\Controllers\Admin\LoanController;
 use App\Http\Controllers\Admin\LoanTypeController;
@@ -121,6 +122,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Disputes
     Route::get('/disputes', [AdminDisputeController::class, 'index'])->name('disputes.index');
     Route::post('/disputes/{dispute}/respond', [AdminDisputeController::class, 'respond'])->name('disputes.respond');
+
+
+    //reports
+    Route::get('/', [AdminReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/members', [AdminReportController::class, 'members'])->name('reports.members');
+    Route::get('/reports/savings', [AdminReportController::class, 'savings'])->name('reports.savings');
+    Route::get('/reports/loans', [AdminReportController::class, 'loans'])->name('reports.loans');
+    Route::get('/reports/transactions', [AdminReportController::class, 'transactions'])->name('reports.transactions');
+
+    Route::get('/reports/members/export', [AdminReportController::class, 'exportMembers'])->name('reports.members.export');
+    Route::get('/reports/loans/export', [AdminReportController::class, 'exportLoans'])->name('reports.loans.export');
 
 }); //end admin routes
 
