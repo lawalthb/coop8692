@@ -72,7 +72,7 @@
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Profile Picture (Required)</label>
-                                <input type="file" name="member_image" accept="image/*" required
+                                <input type="file" name="member_image" accept="image/*" 
                                     class="w-full border border-gray-300 rounded-lg p-2">
                             </div>
 
@@ -99,6 +99,13 @@
                                     @endforeach
                                 </select>
                             </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Hostel Name</label>
+                                <input type="text" name="hostel_name" value="{{ $user->hostel_name }}"
+                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                            </div>
+
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">State</label>
@@ -127,8 +134,43 @@
                         </div>
                     </div>
 
+                    <!-- Add this inside the Additional Information section -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Occupation</label>
+                        <input type="text" name="occupation" value="{{ $user->occupation }}"
+                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                    </div>
+
+                    <!-- Next of Kin Information -->
+                    <div class="space-y-4">
+                        <h4 class="text-md font-semibold text-gray-700">Next of Kin Details</h4>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Next of Kin Name</label>
+                            <input type="text" name="nok" value="{{ $user->nok }}" required
+                                class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Relationship with Next of Kin</label>
+                            <input type="text" name="nok_relationship" value="{{ $user->nok_relationship }}" required
+                                class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Next of Kin Address</label>
+                            <textarea name="nok_address" rows="3" required
+                                class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">{{ $user->nok_address }}</textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Next of Kin Phone Number</label>
+                            <input type="tel" name="nok_phone" value="{{ $user->nok_phone }}" required
+                                class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                        </div>
+                    </div>
                 </div>
-               
+
                 <div class="mt-8">
                     @if(auth()->user()->profileUpdateRequest && auth()->user()->profileUpdateRequest->status === 'pending')
                     <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">

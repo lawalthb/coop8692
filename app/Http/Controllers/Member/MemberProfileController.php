@@ -21,25 +21,7 @@ class MemberProfileController extends Controller
         return view('member.profile.show', compact('user', 'states', 'lgas'));
     }
 
-    public function update(Request $request)
-    {
-        $user = auth()->user();
 
-        $validated = $request->validate([
-            'phone_number' => ['required', 'string', Rule::unique('users')->ignore($user->id)],
-            'home_address' => 'required|string',
-            'state_id' => 'required|exists:states,id',
-            'lga_id' => 'required|exists:lgas,id',
-            'nok' => 'required|string',
-            'nok_relationship' => 'required|string',
-            'nok_phone' => 'required|string',
-            'nok_address' => 'required|string'
-        ]);
-
-        $user->update($validated);
-
-        return back()->with('success', 'Profile updated successfully');
-    }
 
     public function updateRequest(Request $request)
     {
@@ -55,8 +37,14 @@ class MemberProfileController extends Controller
             'lga_id' => 'required|exists:lgas,id',
             'religion' => 'required',
             'marital_status' => 'required',
-            'member_image' => 'required|image|max:2048',
+            'member_image' => 'nullable|image|max:2048',
             'signature_image' => 'nullable|image|max:2048',
+            'nok' => 'required',
+            'nok_relationship' => 'required',
+            'nok_phone' => 'required',
+            'nok_address' => 'required',
+            'occupation' => 'required',
+            'hostel_name' => 'nullable',
         ]);
 
         // Handle file uploads
@@ -74,7 +62,7 @@ class MemberProfileController extends Controller
             ...$validated,
             'status' => 'pending'
         ]);
-      
+
 
         return redirect()->back()->with('success', 'Profile update request submitted successfully');
     }

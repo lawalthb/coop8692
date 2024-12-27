@@ -52,7 +52,10 @@ class ProfileUpdateRequestController extends Controller
             'marital_status',
             'religion',
             'nok_phone',
-            'monthly_savings'
+            'monthly_savings',
+            'hostel_name',
+            'occupation',
+
         ])->mapWithKeys(function ($field) use ($profileRequest) {
             return [$field => $profileRequest->$field];
         })->filter()->toArray();

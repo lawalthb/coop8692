@@ -74,34 +74,65 @@
                             </div>
                             <!-- Display all possible fields -->
                             <div class="grid gap-4">
-                                @foreach([
-                                'title' => 'Title',
-                                'surname' => 'Surname',
-                                'firstname' => 'First Name',
-                                'othername' => 'Other Name',
-                                'home_address' => 'Home Address',
-                                'gender' => 'Gender',
-                                'phone_number' => 'Phone Number',
-                                'email' => 'Email',
-                                'dob' => 'Date of Birth',
-                                'nationality' => 'Nationality',
-                                'marital_status' => 'Marital Status',
-                                'religion' => 'Religion',
-                                'nok' => 'Next of Kin',
-                                'nok_relationship' => 'Next of Kin Relationship',
-                                'nok_address' => 'Next of Kin Address',
-                                'nok_phone' => 'Next of Kin Phone',
-                                'monthly_savings' => 'Monthly Savings'
-                                ] as $field => $label)
-                                <div>
-                                    <label class="text-sm font-medium text-green-600">{{ $label }}</label>
-                                    <p class="text-gray-700">
-                                        {{ $request->$field ?? 'No Change' }}
-                                    </p>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
+                                                            @foreach([
+                                                            'title' => 'Title',
+                                                            'surname' => 'Surname',
+                                                            'firstname' => 'First Name',
+                                                            'othername' => 'Other Name',
+                                                            'home_address' => 'Home Address',
+                                                            'gender' => 'Gender',
+                                                            'phone_number' => 'Phone Number',
+                                                            'email' => 'Email',
+                                                            'dob' => 'Date of Birth',
+                                                            'nationality' => 'Nationality',
+                                                            'marital_status' => 'Marital Status',
+                                                            'religion' => 'Religion',
+                                                            'monthly_savings' => 'Monthly Savings'
+                                                            ] as $field => $label)
+                                                            <div>
+                                                                <label class="text-sm font-medium text-green-600">{{ $label }}</label>
+                                                                <p class="text-gray-700">
+                                                                    {{ $request->$field ?? 'No Change' }}
+                                                                </p>
+                                                            </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Next of Kin Information -->
+                                                    <div class="mt-6">
+                                                        <h3 class="text-lg font-semibold mb-4">Next of Kin Details</h3>
+                                                        <div class="grid grid-cols-2 gap-4">
+                                                            <div>
+                                                                <label class="text-sm font-medium text-gray-500">Next of Kin Name</label>
+                                                                <p class="text-gray-700">{{ $request->nok ?? 'No Change' }}</p>
+                                                            </div>
+
+                                                            <div>
+                                                                <label class="text-sm font-medium text-gray-500">Relationship</label>
+                                                                <p class="text-gray-700">{{ $request->nok_relationship ?? 'No Change' }}</p>
+                                                            </div>
+
+                                                            <div>
+                                                                <label class="text-sm font-medium text-gray-500">Next of Kin Phone</label>
+                                                                <p class="text-gray-700">{{ $request->nok_phone ?? 'No Change' }}</p>
+                                                            </div>
+
+                                                            <div>
+                                                                <label class="text-sm font-medium text-gray-500">Next of Kin Address</label>
+                                                                <p class="text-gray-700">{{ $request->nok_address ?? 'No Change' }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Occupation Information -->
+                                                    <div class="mt-6">
+                                                        <h3 class="text-lg font-semibold mb-4">Professional Information</h3>
+                                                        <div>
+                                                            <label class="text-sm font-medium text-gray-500">Occupation</label>
+                                                            <p class="text-gray-700">{{ $request->occupation ?? 'No Change' }}</p>
+                                                        </div>
+                                                    </div>
                     </div>
                 </div>
 

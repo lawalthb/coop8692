@@ -33,7 +33,9 @@ class ProfileUpdateRequest extends Model
         'signature_image',
         'member_image',
         'status',
-        'admin_remarks'
+        'admin_remarks',
+        'hostel_name',
+        'occupation',
     ];
 
     protected $casts = [

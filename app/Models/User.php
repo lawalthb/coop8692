@@ -46,7 +46,9 @@ class User extends Authenticatable
         'member_no',
         'password',
         'is_admin',
-        'is_approved'
+        'is_approved',
+        'hostel_name',
+        'occupation',
     ];
     protected $appends = ['full_name'];
     /**
