@@ -48,4 +48,10 @@ class Transaction extends Model
     {
         return $this->morphTo();
     }
+
+
+public function dispute()
+{
+    return $this->hasOne(TransactionDispute::class);
+}
 }

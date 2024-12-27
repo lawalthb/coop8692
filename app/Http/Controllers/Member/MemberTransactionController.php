@@ -20,8 +20,16 @@ class MemberTransactionController extends Controller
             $query->whereDate('created_at', '<=', $request->end_date);
         }
 
-        $transactions = $query->latest()->paginate(15);
+        $transactions = $query->latest()->get();
 
-        return view('member.transactions.index', compact('transactions'));
+        // Calculate running balance
+        $runningBalance = 0;
+        foreach ($transactions as $transaction) {
+            $runningBalance += ($transaction->credit_amount - $transaction->debit_amount);
+            $transaction->running_balance = $runningBalance;
+        }
+
+        return view('member.transactions.index', compact('transactions', 'runningBalance'));
     }
+    
 }

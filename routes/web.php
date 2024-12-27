@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminDisputeController;
+use App\Http\Controllers\Admin\AdminTransactionController;
 use App\Http\Controllers\Admin\LoanController;
 use App\Http\Controllers\Admin\LoanTypeController;
 use App\Http\Controllers\Admin\MemberController;
@@ -113,6 +115,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/profile-updates/{request}', [ProfileUpdateRequestController::class, 'show'])->name('profile-updates.show');
     Route::post('/profile-updates/{request}/approve', [ProfileUpdateRequestController::class, 'approve'])->name('profile-updates.approve');
     Route::post('/profile-updates/{request}/reject', [ProfileUpdateRequestController::class, 'reject'])->name('profile-updates.reject');
+
+    //transactions
+    Route::get('/transactions', [AdminTransactionController::class, 'index'])->name('transactions.index');
+    // Disputes
+    Route::get('/disputes', [AdminDisputeController::class, 'index'])->name('disputes.index');
+    Route::post('/disputes/{dispute}/respond', [AdminDisputeController::class, 'respond'])->name('disputes.respond');
+
 }); //end admin routes
 
 
