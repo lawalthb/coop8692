@@ -15,7 +15,8 @@ class Saving extends Model
         'status',
         'posted_by',
         'month_id',
-        'year_id'
+        'year_id',
+        'saving_date' 
     ];
 
     public function user(): BelongsTo

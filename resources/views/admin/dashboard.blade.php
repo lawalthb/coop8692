@@ -54,20 +54,31 @@
 
     <!-- Recent Records Section -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Recent Chart -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold mb-4">Monthly Savings vs Loans ({{ now()->year }})</h2>
+            <div class="flex items-center justify-between border-b pb-2">
+                <canvas id="financialChart"></canvas>
+
+
+
+            </div>
+
+        </div>
         <!-- Recent Members -->
         <div class="bg-white rounded-lg shadow p-6">
             <h2 class="text-xl font-semibold mb-4">Recent Members</h2>
             <div class="space-y-4">
                 @foreach($data['recent_members'] as $member)
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <div>
-                            <p class="font-medium">{{ $member->full_name }}</p>
-                            <p class="text-sm text-gray-600">{{ $member->member_no }}</p>
-                        </div>
-                        <span class="px-2 py-1 rounded-full text-xs {{ $member->is_approved ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                            {{ $member->is_approved ? 'Approved' : 'Pending' }}
-                        </span>
+                <div class="flex items-center justify-between border-b pb-2">
+                    <div>
+                        <p class="font-medium">{{ $member->full_name }}</p>
+                        <p class="text-sm text-gray-600">{{ $member->member_no }}</p>
                     </div>
+                    <span class="px-2 py-1 rounded-full text-xs {{ $member->is_approved ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                        {{ $member->is_approved ? 'Approved' : 'Pending' }}
+                    </span>
+                </div>
                 @endforeach
             </div>
             <a href="{{ route('admin.members.index') }}" class="block mt-4 text-green-600 hover:text-green-700 text-sm">View all members →</a>
@@ -78,19 +89,19 @@
             <h2 class="text-xl font-semibold mb-4">Recent Loan Applications</h2>
             <div class="space-y-4">
                 @foreach($data['recent_loans'] as $loan)
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <div>
-                            <p class="font-medium">{{ $loan->user->full_name }}</p>
-                            <p class="text-sm text-gray-600">₦{{ number_format($loan->amount) }}</p>
-                        </div>
-                        <span class="px-2 py-1 rounded-full text-xs
+                <div class="flex items-center justify-between border-b pb-2">
+                    <div>
+                        <p class="font-medium">{{ $loan->user->full_name }}</p>
+                        <p class="text-sm text-gray-600">₦{{ number_format($loan->amount) }}</p>
+                    </div>
+                    <span class="px-2 py-1 rounded-full text-xs
                             @if($loan->status === 'approved') bg-green-100 text-green-800
                             @elseif($loan->status === 'pending') bg-yellow-100 text-yellow-800
                             @else bg-red-100 text-red-800
                             @endif">
-                            {{ ucfirst($loan->status) }}
-                        </span>
-                    </div>
+                        {{ ucfirst($loan->status) }}
+                    </span>
+                </div>
                 @endforeach
             </div>
             <a href="{{ route('admin.loans.index') }}" class="block mt-4 text-green-600 hover:text-green-700 text-sm">View all loans →</a>
@@ -101,19 +112,63 @@
             <h2 class="text-xl font-semibold mb-4">Recent Savings</h2>
             <div class="space-y-4">
                 @foreach($data['recent_savings'] as $saving)
-                    <div class="flex items-center justify-between border-b pb-2">
-                        <div>
-                            <p class="font-medium">{{ $saving->user->full_name }}</p>
-                            <p class="text-sm text-gray-600">₦{{ number_format($saving->amount) }}</p>
-                        </div>
-                        <span class="text-sm text-gray-500">
-                            {{ $saving->created_at->diffForHumans() }}
-                        </span>
+                <div class="flex items-center justify-between border-b pb-2">
+                    <div>
+                        <p class="font-medium">{{ $saving->user->full_name }}</p>
+                        <p class="text-sm text-gray-600">₦{{ number_format($saving->amount) }}</p>
                     </div>
+                    <span class="text-sm text-gray-500">
+                        {{ $saving->created_at->diffForHumans() }}
+                    </span>
+                </div>
                 @endforeach
             </div>
             <a href="{{ route('admin.savings.index') }}" class="block mt-4 text-green-600 hover:text-green-700 text-sm">View all savings →</a>
         </div>
     </div>
 </div>
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('financialChart').getContext('2d');
+
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: JSON.parse('{!! json_encode($chartData["labels"]) !!}'),
+                datasets: [{
+                        label: 'Savings',
+                        data: JSON.parse('{!! json_encode($chartData["savings"]) !!}'),
+                        backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                        borderColor: 'rgb(16, 185, 129)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Loans',
+                        data: JSON.parse('{!! json_encode($chartData["loans"]) !!}'),
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        borderColor: 'rgb(59, 130, 246)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '₦' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+@endpush
 @endsection

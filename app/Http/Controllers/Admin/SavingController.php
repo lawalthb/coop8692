@@ -14,6 +14,7 @@ use App\Services\TransactionService;
 use App\Notifications\SavingEntryNotification;
 use App\Models\Saving;
 use App\Models\Year;
+use Carbon\Carbon;
 
 class SavingController extends Controller
 {
@@ -38,14 +39,18 @@ class SavingController extends Controller
     {
         DB::transaction(function () use ($request) {
             // First save to savings table
+            $year_id  = Year::where('year', Carbon::parse($request->transaction_date)->year)->first()->id;
+
             $saving = Saving::create([
                 'user_id' => $request->user_id,
                 'saving_type_id' => $request->saving_type_id,
-                'month_id' => $request->month_id,
-                'year_id' => $request->year_id,
+                'month_id' => Carbon::parse($request->transaction_date)->month,
+                'year_id' => $year_id,
+
                 'amount' => $request->amount,
                 'reference' => generateReference('SAV'),
-                'posted_by' => auth()->id()
+                'posted_by' => auth()->id(),
+                'saving_date' => $request->transaction_date
             ]);
 
             // Then create transaction record

@@ -52,23 +52,8 @@
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Month</label>
-                    <select name="month_id" required class="mt-1 block w-full rounded-md border-gray-300">
-                        @foreach($months as $month)
-                        <option value="{{ $month->id }}">{{ $month->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+               
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Year</label>
-                    <select name="year_id" required class="mt-1 block w-full rounded-md border-gray-300">
-                        @foreach($years as $year)
-                        <option value="{{ $year->id }}">{{ $year->year }}</option>
-                        @endforeach
-                    </select>
-                </div>
 
                 <div class="flex justify-end space-x-4">
                     <a href="{{ route('admin.savings.index') }}"

@@ -18,8 +18,7 @@ class SavingEntryRequest extends FormRequest
             'saving_type_id' => 'required|exists:saving_types,id',
             'amount' => 'required|numeric|min:0',
             'transaction_date' => 'required|date|before_or_equal:today',
-            'month_id' => 'required|exists:months,id',
-            'year_id' => 'required|exists:years,id',
+           
         ];
     }
 }
