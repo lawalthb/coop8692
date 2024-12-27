@@ -18,10 +18,12 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Member\DashboardController;
 use App\Http\Controllers\Member\LoanCalculatorController;
 use App\Http\Controllers\Member\LoanReportController;
+use App\Http\Controllers\Member\MemberDisputeController;
 use App\Http\Controllers\Member\MemberLoansController;
 use App\Http\Controllers\Member\MemberNotificationController;
 use App\Http\Controllers\Member\MemberProfileController;
 use App\Http\Controllers\Member\MemberResourceController;
+use App\Http\Controllers\Member\MemberTransactionController;
 use App\Http\Controllers\Member\ProfileController;
 use App\Http\Controllers\Member\SavingsController;
 use App\Http\Controllers\Member\SavingsReportController;
@@ -181,6 +183,9 @@ Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(
     Route::get('/notifications', [MemberNotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/{id}/read', [MemberNotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
     Route::post('/notifications/read-all', [MemberNotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+
+    Route::post('/disputes', [MemberDisputeController::class, 'store'])->name('disputes.store');
+    Route::get('/transactions', [MemberTransactionController::class, 'index'])->name('transactions.index');
 }); //end of member routes
 
 
