@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Exports\MembersExport;
 use App\Exports\LoansExport;
-
+use App\Exports\TransactionsExport;
 
 class AdminReportController extends Controller
 {
@@ -110,7 +110,10 @@ class AdminReportController extends Controller
             });
 
         $transactions = $query->latest()->paginate(15);
-        return view('admin.reports.transactions', compact('transactions'));
+        $members = User::where('is_admin', false)->get();
+        $transactionTypes = Transaction::distinct()->pluck('type');
+
+        return view('admin.reports.transactions', compact('transactions', 'members', 'transactionTypes'));
     }
 
     public function exportMembers(Request $request)
@@ -159,5 +162,31 @@ class AdminReportController extends Controller
         }
 
         return Excel::download(new LoansExport($query), 'loans-report.xlsx');
+    }
+
+
+    public function exportTransactions(Request $request)
+    {
+        $query = Transaction::with(['user'])
+            ->when($request->type, function ($q) use ($request) {
+                return $q->where('type', $request->type);
+            })
+            ->when($request->member_id, function ($q) use ($request) {
+                return $q->where('user_id', $request->member_id);
+            })
+            ->when($request->date_from, function ($q) use ($request) {
+                return $q->whereDate('created_at', '>=', $request->date_from);
+            })
+            ->when($request->date_to, function ($q) use ($request) {
+                return $q->whereDate('created_at', '<=', $request->date_to);
+            });
+
+        if ($request->format === 'pdf') {
+            $transactions = $query->get();
+            $pdf = PDF::loadView('admin.reports.transactions-pdf', compact('transactions'));
+            return $pdf->download('transactions-report.pdf');
+        }
+
+        return Excel::download(new TransactionsExport($query), 'transactions-report.xlsx');
     }
 }

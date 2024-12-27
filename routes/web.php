@@ -134,6 +134,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/reports/members/export', [AdminReportController::class, 'exportMembers'])->name('reports.members.export');
     Route::get('/reports/loans/export', [AdminReportController::class, 'exportLoans'])->name('reports.loans.export');
 
+    Route::get('/reports/transactions/export', [AdminReportController::class, 'exportTransactions'])->name('reports.transactions.export');
+
 }); //end admin routes
 
 
