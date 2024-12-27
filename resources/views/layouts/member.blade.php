@@ -35,7 +35,9 @@
                     <div class="flex items-center">
                         <div x-data="{ open: false }" class="relative">
                             <button @click="open = !open" class="flex items-center space-x-4 text-white hover:text-green-100">
-                                <img class="h-8 w-8 rounded-full object-cover" src="{{ asset('images/avatar.png') }}" alt="Profile">
+                                <img class="h-8 w-8 rounded-full object-cover"
+                                    src="{{ auth()->user()->member_image ? asset('storage/' . auth()->user()->member_image) : asset('images/avatar.png') }}"
+                                    alt="Profile">
                                 <div class="hidden md:block text-left">
                                     <p class="text-sm font-semibold">{{ Auth::user()->full_name }}</p>
                                     <p class="text-xs text-green-100">Member</p>

@@ -23,21 +23,21 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
             $table->date('dob')->nullable();
-            $table->string('nationality')->nullable();
+            $table->string('nationality')->default('Nigerian')->nullable();
             $table->unsignedBigInteger('state_id')->nullable()->index('profile_update_requests_state_id_foreign');
             $table->unsignedBigInteger('lga_id')->nullable()->index('profile_update_requests_lga_id_foreign');
             $table->string('nok')->nullable();
             $table->string('nok_relationship')->nullable();
             $table->text('nok_address')->nullable();
             $table->string('marital_status')->nullable();
-            $table->string('religion')->nullable();
+            $table->string('religion')->enum('Christain', 'Islam', 'Traditional')->nullable();
             $table->string('nok_phone')->nullable();
             $table->decimal('monthly_savings', 10)->nullable();
-            $table->decimal('share_subscription', 10)->nullable();
-            $table->string('month_commence')->nullable();
-            $table->string('staff_no')->nullable();
+
+
+
             $table->string('signature_image')->nullable();
-            $table->date('date_join')->nullable();
+
             $table->string('member_image')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->text('admin_remarks')->nullable();

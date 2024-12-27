@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\LoanController;
 use App\Http\Controllers\Admin\LoanTypeController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\ProfileUpdateRequestController;
 use App\Http\Controllers\Admin\ResourceController;
 use App\Http\Controllers\Admin\SavingController;
 use App\Http\Controllers\Admin\SavingTypeController;
@@ -59,10 +60,6 @@ Route::middleware('guest')->group(function () {
     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
-
-
-
-    
 });
 
 // Logout Route
@@ -93,10 +90,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
 
 
-
-
-
-
     // Loan Types
     Route::resource('loan-types', LoanTypeController::class);
 
@@ -113,7 +106,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::patch('members/{member}/approve', [MemberController::class, 'approve'])->name('members.approve');
 
     Route::patch('members/{member}/approve', [MemberController::class, 'approve'])->name('members.approve');
-});
+
+    Route::get('/profile-updates', [ProfileUpdateRequestController::class, 'index'])->name('profile-updates.index');
+    Route::get('/profile-updates/{request}', [ProfileUpdateRequestController::class, 'show'])->name('profile-updates.show');
+    Route::post('/profile-updates/{request}/approve', [ProfileUpdateRequestController::class, 'approve'])->name('profile-updates.approve');
+    Route::post('/profile-updates/{request}/reject', [ProfileUpdateRequestController::class, 'reject'])->name('profile-updates.reject');
+}); //end admin routes
 
 
 
@@ -169,16 +167,15 @@ Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(
 
     Route::get('/loan-calculator', [LoanCalculatorController::class, 'index'])->name('loan.calculator');
 
-
-
-
-
-
     Route::resource('resources', MemberResourceController::class)->only(['index', 'show']);
     Route::get('resources/{resource}/download', [MemberResourceController::class, 'download'])->name('resources.download');
 
     // Profile routes
     Route::get('/profile', [MemberProfileController::class, 'show'])->name('profile.show');
+
+    Route::post('/profile', [MemberProfileController::class, 'updateRequest'])->name('profile.update-request');
+
+
     Route::put('/profile', [MemberProfileController::class, 'update'])->name('profile.update');
 
     Route::get('/notifications', [MemberNotificationController::class, 'index'])->name('notifications.index');

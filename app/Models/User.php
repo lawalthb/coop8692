@@ -55,7 +55,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
 
-   
+
 
     protected $hidden = [
         'password',
@@ -121,5 +121,13 @@ class User extends Authenticatable
         }
 
         return $firstSaving->created_at->diffInMonths(now());
+    }
+
+
+    public function profileUpdateRequest()
+    {
+        return $this->hasOne(ProfileUpdateRequest::class)
+            ->where('status', 'pending')
+            ->latest();
     }
 }

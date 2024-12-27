@@ -86,6 +86,22 @@
                                         Members
                                     </a>
 
+
+                                        <a href="{{ route('admin.profile-updates.index') }}" class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.profile-updates.*') ? 'bg-green-50 text-green-700' : '' }}">
+                                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                            </svg>
+                                            Profile Request
+                                            @php
+                                            $pendingCount = \App\Models\ProfileUpdateRequest::where('status', 'pending')->count();
+                                            @endphp
+                                            @if($pendingCount > 0)
+                                            <span class="ml-2 px-2 py-1 text-xs bg-red-500 text-white rounded-full">
+                                                {{ $pendingCount }}
+                                            </span>
+                                            @endif
+                                        </a>
+
                                     <a href="{{ route('admin.saving-types.index') }}" class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.saving-types.*') ? 'bg-green-50 text-green-700' : '' }}">
                                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
@@ -113,16 +129,27 @@
                                         </svg>
                                         Loans
                                     </a>
+                                    <a href="{{ route('admin.resources.index') }}" class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.resources.*') ? 'bg-green-50 text-green-700' : '' }}">
+                                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                        </svg>
+                                        Resources
+                                    </a>
                                 </div>
                             </div>
                             <div class="space-y-1">
                                 <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Settings</p>
-                                <a href="{{ route('admin.resources.index') }}" class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.resources.*') ? 'bg-green-50 text-green-700' : '' }}">
+
+
+                                <a href="{{ route('admin.profile-updates.index') }}" class="flex items-center px-4 py-3 text-gray-700 rounded-lg hover:bg-green-50 hover:text-green-700 {{ request()->routeIs('admin.profile-updates.*') ? 'bg-green-50 text-green-700' : '' }}">
                                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
-                                    Resources
+                                    Profile Updates
                                 </a>
+
+
+
                             </div>
                         </div>
                     </nav>
