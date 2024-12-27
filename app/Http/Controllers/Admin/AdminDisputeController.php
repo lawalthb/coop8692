@@ -32,7 +32,7 @@ class AdminDisputeController extends Controller
         // Notify member about the response
         $dispute->user->notify(new DisputeResponseNotification($dispute));
 
-        return redirect()->route('disputes.index')
+        return redirect()->route('admin.disputes.index')
             ->with('success', 'Response sent successfully');
     }
 }
