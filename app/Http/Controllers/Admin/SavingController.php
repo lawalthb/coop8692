@@ -64,11 +64,11 @@ class SavingController extends Controller
             ]);
 
             $user = User::find($request->user_id);
-            $user->notify(new SavingEntryNotification($transaction));
+            $user->notify(new SavingEntryNotification($transaction, 'Your saving entry has been recorded successfully.'));
         });
 
         return redirect()->route('admin.savings.index')
-        ->with('success', 'Saving entry recorded successfully');
+            ->with('success', 'Saving entry recorded successfully');
     }
     public function bulkCreate()
     {
@@ -111,7 +111,7 @@ class SavingController extends Controller
                 ]);
 
                 $user = User::find($entry['user_id']);
-                $user->notify(new SavingEntryNotification($transaction));
+                $user->notify(new SavingEntryNotification($transaction, 'Your saving entry has been recorded successfully.'));
             }
         });
 
@@ -133,5 +133,3 @@ class SavingController extends Controller
         return view('admin.savings.show', compact('saving'));
     }
 }
-
-

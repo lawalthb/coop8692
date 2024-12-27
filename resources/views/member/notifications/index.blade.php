@@ -28,11 +28,17 @@
                                 @endif
                             </div>
                             <p class="text-gray-600">
-                                {{ $notification->data['message'] ?? $notification->data['body'] ?? 'No message content' }}
+                                <p class="text-gray-600">
+                                    @if(isset($notification->data['type']) && $notification->data['type'] === 'savings')
+                                        A savings deposit of ₦{{ number_format($notification->data['amount'], 2) }} has been recorded for {{ $notification->data['saving_type'] }}.
+                                        Reference: {{ $notification->data['reference'] }}
+                                    @else
+                                        {{ $notification->data['message'] ?? $notification->data['body'] ?? 'No message content' }}
+                                    @endif
+                                </p>
                             </p>
 
                         </div>
-
                         @if(!$notification->read_at)
                         <form action="{{ route('member.notifications.markAsRead', $notification->id) }}" method="POST">
                             @csrf

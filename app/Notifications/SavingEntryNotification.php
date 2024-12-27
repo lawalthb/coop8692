@@ -28,14 +28,15 @@ class SavingEntryNotification extends Notification
             ->line('Date: ' . $this->transaction->transaction_date->format('d M, Y'))
             ->line('Current Balance: ₦' . number_format($this->transaction->balance, 2));
     }
-
     public function toArray($notifiable)
     {
         return [
-            'transaction_id' => $this->transaction->id,
-            'type' => 'saving_entry',
+            'type' => 'savings',
             'amount' => $this->transaction->credit_amount,
-            'reference' => $this->transaction->reference
+            'saving_type' => $this->transaction->transactionable->savingType->name,
+            'reference' => $this->transaction->reference,
+            'title' => 'Savings Entry',
+            'message' => "A savings deposit of ₦" . number_format($this->transaction->credit_amount, 2) . " has been recorded"
         ];
     }
 }
