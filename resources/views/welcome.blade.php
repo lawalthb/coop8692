@@ -29,7 +29,7 @@
 <div class="py-10 bg-white">
     <div class="container mx-auto px-4">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose <br /> Compronians 86/92 cooperative society charter?</h2>
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">  Compronians 86/92  <br />cooperative society charter?</h2>
             <p class="text-xl text-gray-600">Experience the benefits of our comprehensive financial services</p>
         </div>
 

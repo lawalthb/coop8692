@@ -40,7 +40,7 @@
                 </h2>
                 <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-green-600">
                     <p class="text-lg text-gray-700 leading-relaxed">
-                        To be the leading cooperative society, recognized for excellence in financial services, member satisfaction, and community development, setting the standard for cooperative banking in Nigeria.
+                        To be the leading cooperative society, recognized for excellence in financial services, member satisfaction, and community development, setting the standard for cooperative operations in Nigeria.
                     </p>
                 </div>
             </div>
@@ -105,7 +105,7 @@
     <div class="container mx-auto px-4">
         <div class="max-w-3xl mx-auto text-center">
             <h2 class="text-3xl font-bold text-gray-900 mb-8">Join Our Thriving Community</h2>
-            <p class="text-xl text-gray-600 mb-8">Experience the power of cooperative banking with Compronians 86/92</p>
+            <p class="text-xl text-gray-600 mb-8">Experience the power of cooperative operations with Compronians 86/92</p>
             <a href="{{ route('register') }}" class="inline-block bg-green-600 text-white px-8 py-4 rounded-lg hover:bg-green-700 font-semibold transition duration-300">
                 Become a Member Today
             </a>

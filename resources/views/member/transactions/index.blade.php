@@ -7,21 +7,24 @@
             <h2 class="text-xl font-bold text-white">My Transactions</h2>
         </div>
         <div class="p-6">
-            <!-- Summary Cards -->
-            <div class="grid grid-cols-3 gap-6 mb-6">
-                <div class="bg-green-50 p-4 rounded-lg">
-                    <h3 class="text-sm font-medium text-green-700">Total Credits</h3>
-                    <p class="text-2xl font-bold text-green-600">₦{{ number_format($transactions->sum('credit_amount'), 2) }}</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-green-50 p-3 md:p-4 rounded-lg">
+                    <h3 class="text-xs md:text-sm font-medium text-green-700">Total Credits</h3>
+                    <p class="text-lg md:text-2xl font-bold text-green-600">₦{{ number_format($transactions->sum('credit_amount'), 2) }}</p>
                 </div>
-                <div class="bg-red-50 p-4 rounded-lg">
-                    <h3 class="text-sm font-medium text-red-700">Total Debits</h3>
-                    <p class="text-2xl font-bold text-red-600">₦{{ number_format($transactions->sum('debit_amount'), 2) }}</p>
+
+                <div class="bg-red-50 p-3 md:p-4 rounded-lg">
+                    <h3 class="text-xs md:text-sm font-medium text-red-700">Total Debits</h3>
+                    <p class="text-lg md:text-2xl font-bold text-red-600">₦{{ number_format($transactions->sum('debit_amount'), 2) }}</p>
                 </div>
-                <div class="bg-blue-50 p-4 rounded-lg">
-                    <h3 class="text-sm font-medium text-blue-700">Current Balance</h3>
-                    <p class="text-2xl font-bold text-blue-600">₦{{ number_format($transactions->sum('credit_amount') - $transactions->sum('debit_amount'), 2) }}</p>
+
+                <div class="bg-blue-50 p-3 md:p-4 rounded-lg">
+                    <h3 class="text-xs md:text-sm font-medium text-blue-700">Current Balance</h3>
+                    <p class="text-lg md:text-2xl font-bold text-blue-600">₦{{ number_format($transactions->sum('credit_amount') - $transactions->sum('debit_amount'), 2) }}</p>
                 </div>
             </div>
+
+
             <table class="min-w-full divide-y divide-gray-200">
                 <thead>
                     <tr>
