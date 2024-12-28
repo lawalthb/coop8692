@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDisputeController;
+use App\Http\Controllers\Admin\AdminGrantController;
 use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\Admin\AdminTransactionController;
 use App\Http\Controllers\Admin\LoanController;
@@ -135,6 +136,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/reports/loans/export', [AdminReportController::class, 'exportLoans'])->name('reports.loans.export');
 
     Route::get('/reports/transactions/export', [AdminReportController::class, 'exportTransactions'])->name('reports.transactions.export');
+
+    //grant
+    Route::get('/grants/create', [AdminGrantController::class, 'create'])->name('grants.create');
+    Route::post('/grants', [AdminGrantController::class, 'store'])->name('grants.store');
+
 
 }); //end admin routes
 
