@@ -45,6 +45,7 @@ class MemberController extends Controller
         $member->update([
             'is_approved' => true,
             'approved_at' => now(),
+            'admin_sign' => 'Yes',
             'approved_by' => auth()->id()
         ]);
 

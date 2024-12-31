@@ -213,7 +213,10 @@ Route::middleware(['auth', 'member'])->prefix('member')->name('member.')->group(
     Route::get('resources/{resource}/download', [MemberResourceController::class, 'download'])->name('resources.download');
 
     // Profile routes
-    Route::get('/profile', [MemberProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/show', [MemberProfileController::class, 'show'])->name('profile.show');
+
+
+    Route::get('/profile', [MemberProfileController::class, 'index'])->name('profile.index');
 
     Route::post('/profile', [MemberProfileController::class, 'updateRequest'])->name('profile.update-request');
 
@@ -246,4 +249,3 @@ Route::get('/mail', function () {
 
     return 'Test email sent successfully!';
 });
-

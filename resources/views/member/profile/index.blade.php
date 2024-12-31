@@ -2,107 +2,87 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-3xl mx-auto">
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="px-6 py-4 bg-green-600">
                 <h2 class="text-xl font-bold text-white">My Profile</h2>
             </div>
 
-            <form action="{{ route('member.profile.update') }}" method="POST" enctype="multipart/form-data" class="p-6">
-                @csrf
-                @method('PUT')
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Personal Information -->
+            <div class="p-6 space-y-6">
+                <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <h3 class="text-lg font-semibold mb-4">Personal Information</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
-                                <select name="title" class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                                    @foreach(['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.'] as $title)
-                                        <option value="{{ $title }}" {{ $user->title === $title ? 'selected' : '' }}>
-                                            {{ $title }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                                <input type="tel" name="phone_number" value="{{ $user->phone_number }}"
-                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
-                                <input type="date" name="dob" value="{{ $user->dob }}"
-                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Home Address</label>
-                                <textarea name="home_address" rows="3"
-                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">{{ $user->home_address }}</textarea>
-                            </div>
-                        </div>
+                        <label class="text-sm font-medium text-gray-700">Full Name</label>
+                        <p class="mt-1">{{ $member->full_name }}</p>
                     </div>
-
-                    <!-- Next of Kin Information -->
                     <div>
-                        <h3 class="text-lg font-semibold mb-4">Next of Kin Details</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Next of Kin Name</label>
-                                <input type="text" name="nok" value="{{ $user->nok }}"
-                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Relationship</label>
-                                <input type="text" name="nok_relationship" value="{{ $user->nok_relationship }}"
-                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Next of Kin Phone</label>
-                                <input type="tel" name="nok_phone" value="{{ $user->nok_phone }}"
-                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Next of Kin Address</label>
-                                <textarea name="nok_address" rows="3"
-                                    class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">{{ $user->nok_address }}</textarea>
-                            </div>
-                        </div>
+                        <label class="text-sm font-medium text-gray-700">Email</label>
+                        <p class="mt-1">{{ $member->email }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Phone Number</label>
+                        <p class="mt-1">{{ $member->phone }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Nationality</label>
+                        <p class="mt-1">{{ $member->nationality }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Marital Status</label>
+                        <p class="mt-1">{{ $member->marital_status }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Religion</label>
+                        <p class="mt-1">{{ $member->religion }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Next of Kin</label>
+                        <p class="mt-1">{{ $member->nok }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Next of Kin Phone</label>
+                        <p class="mt-1">{{ $member->nok_phone }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Next of Kin Relationship</label>
+                        <p class="mt-1">{{ $member->nok_relationship }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Next of Kin Address</label>
+                        <p class="mt-1">{{ $member->nok_address }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Monthly Savings</label>
+                        <p class="mt-1">{{ $member->monthly_savings }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Share Subscription</label>
+                        <p class="mt-1">{{ $member->share_subscription }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Month Commenced</label>
+                        <p class="mt-1">{{ $member->month_commence }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Date Joined</label>
+                        <p class="mt-1">{{ $member->date_join }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Member Number</label>
+                        <p class="mt-1">{{ $member->member_no }}</p>
+                    </div>
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Occupation</label>
+                        <p class="mt-1">{{ $member->occupation }}</p>
                     </div>
                 </div>
 
-                <!-- Documents Upload -->
-                <div class="mt-8">
-                    <h3 class="text-lg font-semibold mb-4">Documents</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Profile Picture</label>
-                            <input type="file" name="member_image" accept="image/*"
-                                class="w-full border border-gray-300 rounded-lg p-2">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Signature</label>
-                            <input type="file" name="signature_image" accept="image/*"
-                                class="w-full border border-gray-300 rounded-lg p-2">
-                        </div>
-                    </div>
+                <div class="flex justify-end mt-6">
+                    <a href="{{ route('member.profile.show') }}"
+                       class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                        Edit Profile
+                    </a>
                 </div>
-
-                <div class="mt-8 flex justify-end">
-                    <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                        Update Profile
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

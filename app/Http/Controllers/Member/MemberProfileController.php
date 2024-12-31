@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\State;
 use App\Models\Lga;
 use App\Models\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+
 
 class MemberProfileController extends Controller
 {
@@ -66,4 +68,20 @@ class MemberProfileController extends Controller
 
         return redirect()->back()->with('success', 'Profile update request submitted successfully');
     }
+
+
+    public function index()
+    {
+        $member = auth()->user();
+        $pendingRequest = $member->profileUpdateRequests()
+            ->where('status', 'pending')
+            ->latest()
+            ->first();
+
+        return view('member.profile.index', compact('member', 'pendingRequest'));
+    }
+
+
+
 }
+

@@ -22,7 +22,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
                                 <select name="title" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                                    @foreach(['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.'] as $title)
+                                    @foreach(['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.', 'Engr.', 'Arc.', 'Pst.', 'Rev.'] as $title)
                                     <option value="{{ $title }}" {{ $user->title === $title ? 'selected' : '' }}>{{ $title }}</option>
                                     @endforeach
                                 </select>
@@ -102,7 +102,7 @@
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Hostel Name</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2"> School House tag (Blue or Crimson or Green)</label>
                                 <input type="text" name="hostel_name" value="{{ $user->hostel_name }}"
                                     class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                             </div>

@@ -125,11 +125,9 @@ class User extends Authenticatable
         return $firstSaving->created_at->diffInMonths(now());
     }
 
-
-    public function profileUpdateRequest()
+    public function profileUpdateRequests()
     {
-        return $this->hasOne(ProfileUpdateRequest::class)
-            ->where('status', 'pending')
-            ->latest();
+        return $this->hasMany(ProfileUpdateRequest::class);
     }
-}
+    }
+
