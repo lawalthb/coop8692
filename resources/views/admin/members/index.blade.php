@@ -52,7 +52,7 @@
                     <td class="px-6 py-4">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                             {{ $member->is_approved ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                            {{ $member->is_approved ? 'Approved' : 'Pending' }}
+                            {{ $member->is_approved ? '1' : '0' }}
                         </span>
                     </td>
                     <td class="px-6 py-4">

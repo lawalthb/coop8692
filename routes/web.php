@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDisputeController;
+use App\Http\Controllers\Admin\AdminExpenseController;
 use App\Http\Controllers\Admin\AdminGrantController;
 use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\Admin\AdminTransactionController;
 use App\Http\Controllers\Admin\LoanController;
+use App\Http\Controllers\Admin\LoanRepaymentController;
 use App\Http\Controllers\Admin\LoanTypeController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\NotificationController;
@@ -33,7 +35,8 @@ use App\Http\Controllers\Member\SavingsController;
 use App\Http\Controllers\Member\SavingsReportController;
 use App\Http\Controllers\Member\SharesController;
 use App\Models\Loan;
-
+use App\Models\LoanRepayment;
+use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -142,6 +145,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/grants', [AdminGrantController::class, 'store'])->name('grants.store');
 
 
+    //repayment routes
+
+
+    Route::post('loans/{loan}/repayment', [LoanRepaymentController::class, 'store'])->name('loans.repayments.store');
+
+    //expenses routes
+    Route::get('/expenses/create', [AdminExpenseController::class, 'create'])->name('expenses.create');
+    Route::post('/expenses', [AdminExpenseController::class, 'store'])->name('expenses.store');
 }); //end admin routes
 
 
@@ -226,3 +237,13 @@ Route::get('/states/{state}/lgas', function ($state) {
         ->where('status', 'active')
         ->get();
 });
+
+Route::get('/mail', function () {
+    Mail::raw('Test email content', function ($message) {
+        $message->to('lawalthb@gmail.com')
+            ->subject('Test Email');
+    });
+
+    return 'Test email sent successfully!';
+});
+

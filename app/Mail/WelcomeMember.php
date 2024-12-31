@@ -21,6 +21,6 @@ class WelcomeMember extends Mailable
     public function build()
     {
         return $this->markdown('emails.welcome-member')
-                    ->subject('Welcome to COOP8692');
+                    ->subject('Welcome to ComproP8692coop.com');
     }
 }

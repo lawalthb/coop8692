@@ -19,7 +19,7 @@ class MemberLoansController extends Controller
     {
         $data = [
             'active_loans' => auth()->user()->loans()
-                ->whereIn('status', ['active', 'pending'])
+                ->whereIn('status', ['approved', 'pending'])
                 ->latest()
                 ->get(),
             'loan_history' => auth()->user()->loans()

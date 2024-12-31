@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Loan;
 use App\Models\LoanRepayment;
 use App\Http\Requests\LoanRepaymentRequest;
+use App\Notifications\LoanRepaymentNotification;
 use App\Services\TransactionService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -50,7 +51,13 @@ class LoanRepaymentController extends Controller
             if ($loan->paid_amount >= $loan->total_amount) {
                 $loan->update(['status' => 'completed']);
             }
+
+            // Notify loan owner
+            $loan->user->notify(new LoanRepaymentNotification($loan, $repayment));
+
         });
+
+
 
         return redirect()->route('admin.loans.show', $loan)
             ->with('success', 'Loan repayment recorded successfully');

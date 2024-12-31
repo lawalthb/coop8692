@@ -5,7 +5,7 @@ Dear {{ $user->title }} {{ $user->surname }},
 
 Thank you for registering with COOP8692. Your membership details are:
 
-**Member Number:** {{ $user->member_no }}
+
 **Full Name:** {{ $user->firstname }} {{ $user->surname }}
 
 Your registration is currently pending admin approval. You will be notified once your account has been approved.

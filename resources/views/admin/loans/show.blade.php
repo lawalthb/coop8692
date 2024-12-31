@@ -32,7 +32,7 @@
                                 <dd class="font-medium">₦{{ number_format($loan->amount) }}</dd>
                             </div>
                             <div class="flex justify-between">
-                                <dt class="text-gray-600">Interest Amount:</dt>
+                                <dt class="text-gray-600">Service Charge:</dt>
                                 <dd class="font-medium">₦{{ number_format($loan->interest_amount) }}</dd>
                             </div>
                             <div class="flex justify-between">
@@ -117,8 +117,17 @@
                     </form>
                 </div>
                 @endif
+                <div class="mt-6">
+                    <button onclick="document.getElementById('repaymentModal').classList.remove('hidden')"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Record Loan Repayment
+                    </button>
+                </div>
+
             </div>
+
         </div>
+
     </div>
 </div>
 
@@ -148,4 +157,120 @@
         </div>
     </div>
 </div>
+
+
+
+
+<!-- Repayment Modal -->
+<div id="repaymentModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h3 class="text-lg font-semibold mb-4">Record Loan Repayment</h3>
+            <form action="{{ route('admin.loans.repayments.store', $loan) }}" method="POST">
+                @csrf
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Amount</label>
+                    <input type="number" name="amount" required step="0.01" min="0" max="{{ $loan->remaining_amount }}" value="{{$loan->monthly_payment}}"
+                        class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Payment Date</label>
+                    <input type="date" name="payment_date" required
+                        class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500" value="{{ now()->format('Y-m-d') }}">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Payment Method</label>
+                    <select name="payment_method" required
+                        class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+                        <option value="bank_transfer">Bank Transfer</option>
+                        <option value="cash">Cash</option>
+                        <option value="cheque">Cheque</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+                    <textarea name="notes" rows="3"
+                        class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500"></textarea>
+                </div>
+                
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="document.getElementById('repaymentModal').classList.add('hidden')"
+                        class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                        Submit Payment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add after existing loan details -->
+<div class="mt-8">
+    <h3 class="text-lg font-semibold mb-4">Loan Balance & Repayment History</h3>
+
+    <!-- Balance Summary -->
+    <div class="bg-gray-50 p-4 rounded-lg mb-4">
+        <div class="grid grid-cols-3 gap-4">
+            <div>
+                <p class="text-sm text-gray-600">Total Amount</p>
+                <p class="font-semibold">₦{{ number_format($loan->total_amount, 2) }}</p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-600">Amount Paid</p>
+                <p class="font-semibold">₦{{ number_format($loan->paid_amount, 2) }}</p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-600">Balance</p>
+                <p class="font-semibold">₦{{ number_format($loan->total_amount - $loan->paid_amount, 2) }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Repayment History Table -->
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reference</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Method</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Posted By</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                @forelse($loan->repayments as $repayment)
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        {{ $repayment->payment_date->format('d M, Y') }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        {{ $repayment->reference_number }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        ₦{{ number_format($repayment->amount, 2) }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        {{ ucfirst($repayment->payment_method) }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        {{ $repayment->postedBy->name }}
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
+                        No repayment records found
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
 @endsection

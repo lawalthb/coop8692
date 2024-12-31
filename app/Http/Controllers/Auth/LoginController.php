@@ -27,6 +27,13 @@ class LoginController extends Controller
                 return redirect()->route('admin.dashboard');
             }
 
+            if (auth()->user()->admin_sign === 'No') {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Your account has not been approved.',
+                ]);
+            }
+
             return redirect()->route('member.dashboard');
         }
 
@@ -34,6 +41,7 @@ class LoginController extends Controller
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
+
 
 
     public function logout(Request $request)

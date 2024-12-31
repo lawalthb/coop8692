@@ -19,7 +19,11 @@ class GuarantorRequestNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        try {
+            return ['mail', 'database'];
+        } catch (\Exception $e) {
+            return ['database']; // Fallback to database only if mail fails
+        }
     }
 
     public function toMail($notifiable)
