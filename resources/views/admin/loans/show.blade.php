@@ -192,8 +192,6 @@
                     <textarea name="notes" rows="3"
                         class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500"></textarea>
                 </div>
-                
-                </div>
                 <div class="flex justify-end space-x-4">
                     <button type="button" onclick="document.getElementById('repaymentModal').classList.add('hidden')"
                         class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
@@ -203,10 +201,12 @@
                         Submit Payment
                     </button>
                 </div>
-            </form>
         </div>
+
+        </form>
     </div>
 </div>
+
 
 <!-- Add after existing loan details -->
 <div class="mt-8">
@@ -272,5 +272,5 @@
         </table>
     </div>
 </div>
-
+</div>
 @endsection
