@@ -99,6 +99,11 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class);
     }
 
+    public function savings()
+    {
+        return $this->hasMany(Saving::class);
+    }
+
     public function guarantorRequests()
     {
         return $this->hasMany(LoanGuarantor::class, 'user_id');

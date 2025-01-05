@@ -48,6 +48,21 @@ class LoanController extends Controller
                 'approved_at' => now(),
             ]);
 
+            $savingsAmount = - ($loan->amount / 2);
+            // Create savings record
+            DB::table('savings')->insert([
+                'user_id' => $loan->user_id,
+                'amount' => $savingsAmount,
+                'saving_type_id' => 1,
+             'reference' => 'LOA' . Str::random(10),
+             'month_id' => now()->month,
+             'year_id' => 2,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'saving_date' => now(),
+                'posted_by' => auth()->id()
+            ]);
+
             $this->transactionService->createLoanTransaction(
                 $loan->user_id,
                 $loan->id,

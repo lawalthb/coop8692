@@ -32,7 +32,7 @@
                                 <dd class="font-medium">₦{{ number_format($loan->amount) }}</dd>
                             </div>
                             <div class="flex justify-between">
-                                <dt class="text-gray-600">Service Charge:</dt>
+                                <dt class="text-gray-600">Admin Charge:</dt>
                                 <dd class="font-medium">₦{{ number_format($loan->interest_amount) }}</dd>
                             </div>
                             <div class="flex justify-between">

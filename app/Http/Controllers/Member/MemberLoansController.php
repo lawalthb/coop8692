@@ -36,16 +36,29 @@ class MemberLoansController extends Controller
     public function create()
     {
         $loanTypes = LoanType::where('status', 'active')->get();
-        $members = User::where('id', '!=', auth()->user()->id)->get();
+        $members = User::where('id', '!=', auth()->user()->id)->where('is_admin', false)->get();
         return view('member.loans.create', compact('loanTypes', 'members'));
     }
 
     public function store(LoanApplicationRequest $request)
     {
+
+        // Check for existing active or uncompleted loans
+        $hasActiveLoan = Loan::where('user_id', auth()->id())
+            ->whereIn('status', ['approved', 'pending'])
+            ->exists();
+
+        if ($hasActiveLoan) {
+            return redirect()->route('member.loans.index')
+            ->with('error', 'You cannot apply for a new loan while having an active or pending loan');
+        }
+
+
+
         $loanType = LoanType::findOrFail($request->loan_type_id);
 
         // Calculate loan details
-        $interestRate = $request->duration;
+        $interestRate = $loanType->interest_rate;
 
         $interestAmount = ($request->amount * $interestRate / 100);
         $totalAmount = $request->amount + $interestAmount;

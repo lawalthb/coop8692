@@ -51,7 +51,7 @@
                             <span id="monthlyPayment" class="text-lg font-semibold"></span>
                         </div>
                         <div class="flex justify-between items-center border-b py-2">
-                            <span class="text-gray-600">Total Interest</span>
+                            <span class="text-gray-600">Total Admin Charge</span>
                             <span id="totalInterest" class="text-lg font-semibold"></span>
                         </div>
                         <div class="flex justify-between items-center border-b py-2">

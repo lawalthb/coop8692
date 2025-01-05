@@ -52,6 +52,21 @@ class LoanRepaymentController extends Controller
                 $loan->update(['status' => 'completed']);
             }
 
+
+            $ReturnSavingsAmount =  ($loan->amount / $loan->duration);
+            // Create savings record
+            DB::table('savings')->insert([
+                'user_id' => $loan->user_id,
+                'amount' => $ReturnSavingsAmount,
+                'saving_type_id' => 1,
+                'reference' => 'LOA' . Str::random(10),
+                'month_id' => now()->month,
+                'year_id' => 2,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'saving_date' => now(),
+                'posted_by' => auth()->id()
+            ]);
             // Notify loan owner
             $loan->user->notify(new LoanRepaymentNotification($loan, $repayment));
 

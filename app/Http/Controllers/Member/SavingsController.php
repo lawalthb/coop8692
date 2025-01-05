@@ -14,9 +14,9 @@ class SavingsController extends Controller
 
         $data = [
             'saving_types' => SavingType::where('status', 'active')->get(),
-            'total_savings' => $user->transactions()
-                ->where('type', 'savings')
-                ->sum('credit_amount'),
+            'total_savings' => $user->savings()
+                ->where('saving_type_id', 1)
+                ->sum('amount'),
             'transactions' => $user->transactions()
                 ->where('type', 'savings')
                 ->latest()
