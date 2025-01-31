@@ -34,7 +34,26 @@
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="{{ route('admin.saving-types.edit', $type) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                        @if($type->name !== 'Ordinary Savings')
+                            <div class="flex space-x-3">
+                                <a href="{{ route('admin.saving-types.edit', $type) }}"
+                                   class="text-indigo-600 hover:text-indigo-900">Edit</a>
+
+                                <form action="{{ route('admin.saving-types.destroy', $type) }}"
+                                      method="POST"
+                                      onsubmit="return confirm('Are you sure you want to delete this saving type?')"
+                                      class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="text-red-600 hover:text-red-900">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        @else
+                            <span class="text-gray-400">System</span>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

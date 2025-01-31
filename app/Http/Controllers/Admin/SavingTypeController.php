@@ -40,5 +40,16 @@ class SavingTypeController extends Controller
         $savingType->update($request->validated());
         return redirect()->route('admin.saving-types.index')
             ->with('success', 'Saving type updated successfully');
-    }
+        }
+        public function destroy(SavingType $savingType)
+        {
+            if ($savingType->name === 'Ordinary Savings') {
+                return back()->with('error', 'Ordinary Savings cannot be modified or deleted');
+            }
+
+            $savingType->delete();
+            return redirect()->route('admin.saving-types.index')
+                ->with('success', 'Saving type deleted successfully');
+        }
 }
+
