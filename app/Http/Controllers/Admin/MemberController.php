@@ -24,9 +24,13 @@ class MemberController extends Controller
 
     public function show(User $member)
     {
-        $member->load(['state', 'lga', 'loans', 'transactions']);
-        return view('admin.members.show', compact('member'));
-    }
+      $member->load(['state', 'lga', 'loans', 'transactions']);
+    $totalSavings = $member->savings()
+        ->where('saving_type_id', 1)
+        ->sum('amount');
+    return view('admin.members.show', compact('member', 'totalSavings'));
+}
+
 
     public function edit(User $member)
     {
@@ -92,4 +96,19 @@ class MemberController extends Controller
         $states = State::where('status', 'active')->get();
         return view('admin.members.create', compact('states'));
     }
+
+    public function destroy(User $member)
+{
+    if ($member->transactions()->where('type', 'savings')->exists()) {
+        return back()->with('error', 'Cannot delete member with existing savings');
+    }
+
+    if ($member->loans()->where('status', 'active')->exists()) {
+        return back()->with('error', 'Cannot delete member with active loans');
+    }
+
+    $member->delete();
+    return redirect()->route('admin.members.index')
+        ->with('success', 'Member deleted successfully');
+}
 }

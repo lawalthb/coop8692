@@ -113,6 +113,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Members
     Route::resource('members', MemberController::class);
     Route::patch('members/{member}/approve', [MemberController::class, 'approve'])->name('members.approve');
+    Route::delete('/members/{member}', [MemberController::class, 'destroy'])->name('members.destroy');
+
 
     Route::patch('members/{member}/approve', [MemberController::class, 'approve'])->name('members.approve');
 

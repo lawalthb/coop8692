@@ -34,6 +34,7 @@
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">S/N</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Member No</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
@@ -43,8 +44,10 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
-                @foreach($members as $member)
+
+                @foreach($members as $index => $member)
                 <tr>
+                    <td class="px-6 py-4">{{ $members->firstItem() + $index }}</td>
                     <td class="px-6 py-4">{{ $member->member_no }}</td>
                     <td class="px-6 py-4">{{ $member->full_name }}</td>
                     <td class="px-6 py-4">{{ $member->email }}</td>
