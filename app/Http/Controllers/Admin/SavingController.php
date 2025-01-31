@@ -137,4 +137,21 @@ class SavingController extends Controller
     {
         return view('admin.savings.show', compact('saving'));
     }
+
+    public function destroy(Saving $saving)
+{
+    DB::transaction(function () use ($saving) {
+        // Delete associated transaction first
+        Transaction::where('transactionable_id', $saving->id)
+            ->where('transactionable_type', Saving::class)
+            ->delete();
+
+        // Delete the saving record
+        $saving->delete();
+    });
+
+    return redirect()->route('admin.savings.index')
+        ->with('success', 'Saving entry deleted successfully');
+}
+
 }

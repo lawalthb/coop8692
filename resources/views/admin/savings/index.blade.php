@@ -13,7 +13,6 @@
             </a>
         </div>
     </div>
-
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
@@ -24,6 +23,7 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reference</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
@@ -32,13 +32,25 @@
                     <td class="px-6 py-4">{{ $transaction->created_at->format('d M, Y') }}</td>
                     <td class="px-6 py-4">{{ $transaction->user->full_name }}</td>
                     <td class="px-6 py-4">{{ $transaction->savingType?->name ?? 'N/A' }}</td>
-
                     <td class="px-6 py-4">₦{{ number_format($transaction->amount) }}</td>
                     <td class="px-6 py-4">{{ $transaction->reference }}</td>
                     <td class="px-6 py-4">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                             {{ $transaction->status }}
                         </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <form action="{{ route('admin.savings.destroy', $transaction) }}"
+                              method="POST"
+                              onsubmit="return confirm('Are you sure you want to delete this saving entry?')"
+                              class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                    class="text-red-600 hover:text-red-900">
+                                Delete
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach
