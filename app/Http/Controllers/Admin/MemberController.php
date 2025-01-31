@@ -13,14 +13,22 @@ use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
-    public function index()
-    {
-        $members = User::where('is_admin', false)
-            ->with(['state', 'lga'])
-            ->latest()
-            ->paginate(15);
-        return view('admin.members.index', compact('members'));
+ public function index(Request $request)
+{
+    $query = User::where('is_admin', false)
+        ->with(['state', 'lga']);
+
+    if ($request->has('status')) {
+        if ($request->status === 'approved') {
+            $query->where('is_approved', true);
+        } elseif ($request->status === 'pending') {
+            $query->where('is_approved', false);
+        }
     }
+
+    $members = $query->latest()->paginate(15);
+    return view('admin.members.index', compact('members'));
+}
 
     public function show(User $member)
     {

@@ -30,7 +30,6 @@
             </div>
         </div>
 
-
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
@@ -44,7 +43,6 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
-
                 @foreach($members as $index => $member)
                 <tr>
                     <td class="px-6 py-4">{{ $members->firstItem() + $index }}</td>
@@ -66,9 +64,8 @@
                 @endforeach
             </tbody>
         </table>
-
         <div class="px-6 py-4">
-            {{ $members->links() }}
+            {{ $members->appends(request()->query())->links() }}
         </div>
     </div>
 </div>
