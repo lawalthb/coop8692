@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDisputeController;
 use App\Http\Controllers\Admin\AdminExpenseController;
@@ -155,6 +156,19 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     //expenses routes
     Route::get('/expenses/create', [AdminExpenseController::class, 'create'])->name('expenses.create');
     Route::post('/expenses', [AdminExpenseController::class, 'store'])->name('expenses.store');
+
+
+
+    //admins
+    Route::get('/admins', [AdminController::class, 'index'])->name('admins.index');
+    Route::get('/admins/create', [AdminController::class, 'create'])->name('admins.create');
+    Route::post('/admins', [AdminController::class, 'store'])->name('admins.store');
+    Route::get('/admins/{admin}', [AdminController::class, 'show'])->name('admins.show');
+    Route::get('/admins/{admin}/edit', [AdminController::class, 'edit'])->name('admins.edit');
+    Route::put('/admins/{admin}', [AdminController::class, 'update'])->name('admins.update');
+    Route::delete('/admins/{admin}', [AdminController::class, 'destroy'])->name('admins.destroy');
+
+
 }); //end admin routes
 
 

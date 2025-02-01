@@ -16,7 +16,7 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Admin ID</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                 </tr>
             </thead>
@@ -24,12 +24,28 @@
                 @foreach($admins as $admin)
                 <tr>
                     <td class="px-6 py-4">{{ $admin->member_no }}</td>
-                    <td class="px-6 py-4">{{ $admin->full_name }}</td>
+                    <td class="px-6 py-4">{{ $admin->surname }} {{ $admin->firstname }}</td>
                     <td class="px-6 py-4">{{ $admin->email }}</td>
-                    <td class="px-6 py-4">{{ $admin->phone_number }}</td>
-                    <td class="px-6 py-4">
-                        <a href="{{ route('admin.admins.edit', $admin) }}"
-                            class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                    <td class="px-6 py-4">{{ $admin->admin_role }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div class="flex space-x-3">
+                            <a href="{{ route('admin.admins.edit', $admin) }}"
+                               class="text-indigo-600 hover:text-indigo-900">Edit</a>
+
+                            @if($admin->email !== 'anonymous@coop8692.com')
+                                <form action="{{ route('admin.admins.destroy', $admin) }}"
+                                      method="POST"
+                                      onsubmit="return confirm('Are you sure you want to delete this admin?')"
+                                      class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="text-red-600 hover:text-red-900">
+                                        Delete
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
                     </td>
                 </tr>
                 @endforeach

@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $title
@@ -161,6 +161,7 @@ class User extends Authenticatable
         'is_approved',
         'hostel_name',
         'occupation',
+        'admin_role'
     ];
     protected $appends = ['full_name'];
     /**

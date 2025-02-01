@@ -14,11 +14,11 @@ class AdminRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'title' => 'required|in:Mr.,Mrs.,Ms.,Dr.,Prof.',
+
             'surname' => 'required|string|max:255',
             'firstname' => 'required|string|max:255',
-            'othername' => 'nullable|string|max:255',
-            'phone_number' => 'required|string|max:20',
+          
+
         ];
 
         if ($this->isMethod('POST')) {

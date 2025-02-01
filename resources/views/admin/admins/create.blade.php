@@ -12,14 +12,6 @@
                 @csrf
 
                 <div class="grid grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
-                        <select name="title" required class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                            @foreach(['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Prof.'] as $title)
-                                <option value="{{ $title }}">{{ $title }}</option>
-                            @endforeach
-                        </select>
-                    </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Surname</label>
@@ -33,11 +25,18 @@
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Other Name</label>
-                        <input type="text" name="othername"
-                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                    </div>
+                   <div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">Admin Role</label>
+    <select name="admin_role"
+        class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
+        <option value="">Select Role</option>
+        <option value="super_admin">Super Admin</option>
+        <option value="supervisor">Supervisor</option>
+        <option value="admin">Admin</option>
+        <option value="loan_manager">Loan Manager</option>
+        <option value="savings_manager">Savings Manager</option>
+    </select>
+</div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
@@ -45,11 +44,7 @@
                             class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                        <input type="tel" name="phone_number" required
-                            class="w-full rounded-lg border-gray-300 focus:border-green-500 focus:ring-green-500">
-                    </div>
+                    
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
