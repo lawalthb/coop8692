@@ -190,14 +190,15 @@
                                         </svg>
                                         Reports
                                     </a>
-
+@endif
 
 
                                 </div>
                             </div>
-                            @endif
-                              @if(Auth::user()->admin_role === 'super_admin' )
+
+
                             <div class="space-y-1">
+                                    @if(Auth::user()->admin_role === 'super_admin' )
                                 <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Settings</p>
 
 

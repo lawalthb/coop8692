@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-8 max-w-7xl">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold text-gray-800">Member Management</h1>
         <a href="{{ route('admin.members.create') }}"
@@ -29,7 +29,8 @@
                 </a>
             </div>
         </div>
-
+<div class="overflow-x-auto">
+    <div class="inline-block min-w-full align-middle">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
@@ -45,18 +46,18 @@
             <tbody class="divide-y divide-gray-200">
                 @foreach($members as $index => $member)
                 <tr>
-                    <td class="px-6 py-4">{{ $members->firstItem() + $index }}</td>
-                    <td class="px-6 py-4">{{ $member->member_no }}</td>
-                    <td class="px-6 py-4">{{ $member->full_name }}</td>
-                    <td class="px-6 py-4">{{ $member->email }}</td>
-                    <td class="px-6 py-4">{{ $member->phone_number }}</td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-3 whitespace-nowrap text-sm">{{ $members->firstItem() + $index }}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm">{{ $member->member_no }}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm">{{ $member->full_name }}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm">{{ $member->email }}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm">{{ $member->phone_number }}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                             {{ $member->is_approved ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                             {{ $member->is_approved ? 'Approved' : 'Pending' }}
                         </span>
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-4 py-3 whitespace-nowrap text-sm">
                         <a href="{{ route('admin.members.show', $member) }}"
                             class="text-indigo-600 hover:text-indigo-900">View</a>
                     </td>
@@ -64,9 +65,11 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="px-6 py-4">
+        <div class="px-4 py-3 whitespace-nowrap text-sm">
             {{ $members->appends(request()->query())->links() }}
         </div>
     </div>
+     </div>
+</div>
 </div>
 @endsection
