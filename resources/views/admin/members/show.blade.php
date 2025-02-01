@@ -8,6 +8,7 @@
 <div class="px-6 py-4 bg-green-600 flex justify-between items-center">
     <h2 class="text-xl font-bold text-white">Member Details</h2>
     <div class="flex space-x-4">
+              @if(Auth::user()->admin_role === 'super_admin' || Auth::user()->admin_role === 'admin' )
         @if(!$member->is_approved)
             <form action="{{ route('admin.members.approve', $member) }}" method="POST">
                 @csrf
@@ -17,7 +18,8 @@
                 </button>
             </form>
         @endif
-
+        @endif
+    @if(Auth::user()->admin_role === 'super_admin' )
         @if($totalSavings == 0)
             <form action="{{ route('admin.members.destroy', $member) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this member?')">
                 @csrf
@@ -26,6 +28,7 @@
                     Delete Member
                 </button>
             </form>
+        @endif
         @endif
     </div>
 </div>

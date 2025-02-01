@@ -5,12 +5,14 @@
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold text-gray-800">Savings Management</h1>
         <div class="space-x-4">
+                  @if(Auth::user()->admin_role === 'super_admin' || Auth::user()->admin_role === 'admin' || Auth::user()->admin_role === 'savings_manager')
             <a href="{{ route('admin.savings.create') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
                 Single Entry
             </a>
             <a href="{{ route('admin.savings.bulk-create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                 Bulk Entry
             </a>
+            @endif
         </div>
     </div>
     <div class="bg-white rounded-lg shadow overflow-hidden">
@@ -40,6 +42,7 @@
                         </span>
                     </td>
                     <td class="px-6 py-4">
+                        @if(Auth::user()->admin_role === 'super_admin' )
                         <form action="{{ route('admin.savings.destroy', $transaction) }}"
                               method="POST"
                               onsubmit="return confirm('Are you sure you want to delete this saving entry?')"
@@ -51,6 +54,7 @@
                                 Delete
                             </button>
                         </form>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
